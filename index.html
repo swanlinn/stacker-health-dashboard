@@ -7,18 +7,16 @@
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/recharts@2.5.0/dist/Recharts.js"></script>
 </head>
 <body>
   <div id="root"></div>
   
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script src="https://unpkg.com/recharts@2.5.0/dist/Recharts.js"></script>
-  
-  <script type="text/babel">
-    const { useState, useEffect } = React;
+  <script>
+    const { useState, useEffect, createElement: e } = React;
     const { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } = window.Recharts;
 
-    const StackerDashboard = () => {
+    function StackerDashboard() {
       const [viewMode, setViewMode] = useState('overview');
       const [timeRange, setTimeRange] = useState('current');
       const [loading, setLoading] = useState(false);
@@ -133,147 +131,123 @@
       };
 
       if (!data) {
-        return (
-          <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-6 flex items-center justify-center">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-              <p className="text-slate-600">Loading dashboard...</p>
-            </div>
-          </div>
+        return e('div', { className: 'min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-6 flex items-center justify-center' },
+          e('div', { className: 'text-center' },
+            e('div', { className: 'animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4' }),
+            e('p', { className: 'text-slate-600' }, 'Loading dashboard...')
+          )
         );
       }
 
       const filteredMetrics = filterMetrics();
 
-      return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-6">
-          <div className="max-w-7xl mx-auto">
-            <div className="mb-8">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <h1 className="text-4xl font-bold text-slate-900 mb-2">Stacker Health Scorecard</h1>
-                  <p className="text-slate-600">Week Ending: {data.weekEnding}</p>
-                </div>
-                <div className="flex gap-2 items-center">
-                  <div className="flex items-center gap-2 px-3 py-2 bg-white rounded-lg border border-slate-200">
-                    <button
-                      onClick={() => setAutoRefresh(!autoRefresh)}
-                      className={`text-sm font-medium ${autoRefresh ? 'text-green-600' : 'text-slate-400'}`}
-                    >
-                      {autoRefresh ? '● Auto' : '○ Manual'}
-                    </button>
-                    {autoRefresh && (
-                      <span className="text-sm text-slate-500">{formatCountdown(countdown)}</span>
-                    )}
-                  </div>
-                  <button 
-                    onClick={loadFromSheets} 
-                    disabled={loading}
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
-                  >
-                    <span className={loading ? 'animate-spin' : ''}>↻</span>
-                    Refresh
-                  </button>
-                </div>
-              </div>
-
-              {error && (
-                <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2">
-                  <span className="text-red-600">⚠</span>
-                  <div className="text-sm text-red-800">{error}</div>
-                </div>
-              )}
-
-              <div className="flex gap-2 mb-4">
-                {['overview', 'product', 'sales', 'finance'].map(mode => (
-                  <button 
-                    key={mode} 
-                    onClick={() => setViewMode(mode)}
-                    className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                      viewMode === mode ? 'bg-blue-600 text-white' : 'bg-white text-slate-700 hover:bg-slate-100'
-                    }`}
-                  >
-                    {mode.charAt(0).toUpperCase() + mode.slice(1)}
-                  </button>
-                ))}
-              </div>
-
-              <div className="flex gap-2 items-center">
-                <span className="text-sm font-medium text-slate-600 mr-2">Time Period:</span>
-                {[
-                  { key: 'current', label: 'Current Week' },
-                  { key: 'fourWeek', label: '4-Week Avg' },
-                  { key: 'thirteenWeek', label: '13-Week Avg' }
-                ].map(range => (
-                  <button
-                    key={range.key}
-                    onClick={() => setTimeRange(range.key)}
-                    className={`px-4 py-2 text-sm rounded-lg font-medium transition-colors ${
-                      timeRange === range.key ? 'bg-slate-700 text-white' : 'bg-white text-slate-600 hover:bg-slate-100'
-                    }`}
-                  >
-                    {range.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="mb-4">
-              <h2 className="text-xl font-semibold text-slate-700">Viewing: {getTimeRangeLabel()}</h2>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {Object.entries(filteredMetrics).map(([key, metricData]) => {
-                const metric = metricData[timeRange];
-                if (!metric) return null;
-                
-                const showChart = timeRange === 'fourWeek' || timeRange === 'thirteenWeek';
-                const chartData = timeRange === 'fourWeek' ? metricData.historicalFourWeek : metricData.historicalThirteenWeek;
-                
-                return (
-                  <div key={key} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow p-6 border border-slate-200">
-                    <div className="flex justify-between items-start mb-4">
-                      <h3 className="text-sm font-medium text-slate-600">{getMetricLabel(key)}</h3>
-                      <div className={`flex items-center gap-1 ${getTrendColor(key, metric.change)}`}>
-                        <span className="text-lg">{getTrendIcon(metric.change)}</span>
-                        <span className="text-sm font-medium">
-                          {metric.change > 0 ? '+' : ''}{metric.change.toFixed(1)}%
-                        </span>
-                      </div>
-                    </div>
-                    <div className="mb-2">
-                      <div className="text-3xl font-bold text-slate-900">{formatValue(key, metric.value)}</div>
-                    </div>
-                    <div className="text-sm text-slate-500 mb-4">Previous: {formatValue(key, metric.previous)}</div>
-
-                    {showChart && chartData && chartData.length > 0 && (
-                      <div className="mt-4 pt-4 border-t border-slate-200">
-                        <h4 className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-3">Historical Trend</h4>
-                        <ResponsiveContainer width="100%" height={120}>
-                          <BarChart data={chartData}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                            <XAxis dataKey="week" tick={{ fontSize: 11, fill: '#64748b' }} tickLine={false} />
-                            <YAxis tick={{ fontSize: 11, fill: '#64748b' }} tickLine={false} axisLine={false} />
-                            <Tooltip />
-                            <Bar dataKey="value" radius={[4, 4, 0, 0]}>
-                              {chartData.map((entry, idx) => (
-                                <Cell key={`cell-${idx}`} fill={idx === chartData.length - 1 ? '#3b82f6' : '#94a3b8'} />
-                              ))}
-                            </Bar>
-                          </BarChart>
-                        </ResponsiveContainer>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
+      return e('div', { className: 'min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-6' },
+        e('div', { className: 'max-w-7xl mx-auto' },
+          e('div', { className: 'mb-8' },
+            e('div', { className: 'flex items-center justify-between mb-4' },
+              e('div', null,
+                e('h1', { className: 'text-4xl font-bold text-slate-900 mb-2' }, 'Stacker Health Scorecard'),
+                e('p', { className: 'text-slate-600' }, 'Week Ending: ' + data.weekEnding)
+              ),
+              e('div', { className: 'flex gap-2 items-center' },
+                e('div', { className: 'flex items-center gap-2 px-3 py-2 bg-white rounded-lg border border-slate-200' },
+                  e('button', {
+                    onClick: () => setAutoRefresh(!autoRefresh),
+                    className: `text-sm font-medium ${autoRefresh ? 'text-green-600' : 'text-slate-400'}`
+                  }, autoRefresh ? '● Auto' : '○ Manual'),
+                  autoRefresh && e('span', { className: 'text-sm text-slate-500' }, formatCountdown(countdown))
+                ),
+                e('button', {
+                  onClick: loadFromSheets,
+                  disabled: loading,
+                  className: 'flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50'
+                },
+                  e('span', { className: loading ? 'animate-spin' : '' }, '↻'),
+                  'Refresh'
+                )
+              )
+            ),
+            error && e('div', { className: 'mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2' },
+              e('span', { className: 'text-red-600' }, '⚠'),
+              e('div', { className: 'text-sm text-red-800' }, error)
+            ),
+            e('div', { className: 'flex gap-2 mb-4' },
+              ['overview', 'product', 'sales', 'finance'].map(mode =>
+                e('button', {
+                  key: mode,
+                  onClick: () => setViewMode(mode),
+                  className: `px-4 py-2 rounded-lg font-medium transition-colors ${
+                    viewMode === mode ? 'bg-blue-600 text-white' : 'bg-white text-slate-700 hover:bg-slate-100'
+                  }`
+                }, mode.charAt(0).toUpperCase() + mode.slice(1))
+              )
+            ),
+            e('div', { className: 'flex gap-2 items-center' },
+              e('span', { className: 'text-sm font-medium text-slate-600 mr-2' }, 'Time Period:'),
+              [
+                { key: 'current', label: 'Current Week' },
+                { key: 'fourWeek', label: '4-Week Avg' },
+                { key: 'thirteenWeek', label: '13-Week Avg' }
+              ].map(range =>
+                e('button', {
+                  key: range.key,
+                  onClick: () => setTimeRange(range.key),
+                  className: `px-4 py-2 text-sm rounded-lg font-medium transition-colors ${
+                    timeRange === range.key ? 'bg-slate-700 text-white' : 'bg-white text-slate-600 hover:bg-slate-100'
+                  }`
+                }, range.label)
+              )
+            )
+          ),
+          e('div', { className: 'mb-4' },
+            e('h2', { className: 'text-xl font-semibold text-slate-700' }, 'Viewing: ' + getTimeRangeLabel())
+          ),
+          e('div', { className: 'grid grid-cols-1 lg:grid-cols-2 gap-6' },
+            Object.entries(filteredMetrics).map(([key, metricData]) => {
+              const metric = metricData[timeRange];
+              if (!metric) return null;
+              
+              const showChart = timeRange === 'fourWeek' || timeRange === 'thirteenWeek';
+              const chartData = timeRange === 'fourWeek' ? metricData.historicalFourWeek : metricData.historicalThirteenWeek;
+              
+              return e('div', { key: key, className: 'bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow p-6 border border-slate-200' },
+                e('div', { className: 'flex justify-between items-start mb-4' },
+                  e('h3', { className: 'text-sm font-medium text-slate-600' }, getMetricLabel(key)),
+                  e('div', { className: `flex items-center gap-1 ${getTrendColor(key, metric.change)}` },
+                    e('span', { className: 'text-lg' }, getTrendIcon(metric.change)),
+                    e('span', { className: 'text-sm font-medium' },
+                      (metric.change > 0 ? '+' : '') + metric.change.toFixed(1) + '%'
+                    )
+                  )
+                ),
+                e('div', { className: 'mb-2' },
+                  e('div', { className: 'text-3xl font-bold text-slate-900' }, formatValue(key, metric.value))
+                ),
+                e('div', { className: 'text-sm text-slate-500 mb-4' }, 'Previous: ' + formatValue(key, metric.previous)),
+                showChart && chartData && chartData.length > 0 && e('div', { className: 'mt-4 pt-4 border-t border-slate-200' },
+                  e('h4', { className: 'text-xs font-medium text-slate-500 uppercase tracking-wide mb-3' }, 'Historical Trend'),
+                  e(ResponsiveContainer, { width: '100%', height: 120 },
+                    e(BarChart, { data: chartData },
+                      e(CartesianGrid, { strokeDasharray: '3 3', stroke: '#e2e8f0' }),
+                      e(XAxis, { dataKey: 'week', tick: { fontSize: 11, fill: '#64748b' }, tickLine: false }),
+                      e(YAxis, { tick: { fontSize: 11, fill: '#64748b' }, tickLine: false, axisLine: false }),
+                      e(Tooltip, null),
+                      e(Bar, { dataKey: 'value', radius: [4, 4, 0, 0] },
+                        chartData.map((entry, idx) =>
+                          e(Cell, { key: `cell-${idx}`, fill: idx === chartData.length - 1 ? '#3b82f6' : '#94a3b8' })
+                        )
+                      )
+                    )
+                  )
+                )
+              );
+            })
+          )
+        )
       );
-    };
+    }
 
-    ReactDOM.render(<StackerDashboard />, document.getElementById('root'));
+    ReactDOM.render(React.createElement(StackerDashboard), document.getElementById('root'));
   </script>
 </body>
 </html>
