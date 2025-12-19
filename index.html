@@ -22,20 +22,14 @@
       const [error, setError] = useState(null);
       const [data, setData] = useState(null);
       const [autoRefresh, setAutoRefresh] = useState(true);
-      const [countdown, setCountdown] = useState(900);
+      const [lastUpdated, setLastUpdated] = useState(null);
 
       useEffect(() => {
         if (!autoRefresh) return;
         
         const timer = setInterval(() => {
-          setCountdown(prev => {
-            if (prev <= 1) {
-              loadFromSheets();
-              return 900;
-            }
-            return prev - 1;
-          });
-        }, 1000);
+          loadFromSheets();
+        }, 900000); // 15 minutes in milliseconds
 
         return () => clearInterval(timer);
       }, [autoRefresh]);
@@ -57,7 +51,7 @@
 
           const processedData = await response.json();
           setData(processedData);
-          setCountdown(900);
+          setLastUpdated(new Date());
           
         } catch (err) {
           setError(err.message);
@@ -127,6 +121,21 @@
         const mins = Math.floor(seconds / 60);
         const secs = seconds % 60;
         return `${mins}:${secs.toString().padStart(2, '0')}`;
+      };
+
+      const formatLastUpdated = () => {
+        if (!lastUpdated) return 'Never';
+        const now = new Date();
+        const diffMs = now - lastUpdated;
+        const diffMins = Math.floor(diffMs / 60000);
+        
+        if (diffMins < 1) return 'Just now';
+        if (diffMins === 1) return '1 min ago';
+        if (diffMins < 60) return `${diffMins} mins ago`;
+        
+        const hours = Math.floor(diffMins / 60);
+        if (hours === 1) return '1 hour ago';
+        return `${hours} hours ago`;
       };
 
       const ChartComponent = React.memo(function ChartComponent({ chartData, metricKey }) {
@@ -242,8 +251,10 @@
                   e('button', {
                     onClick: () => setAutoRefresh(!autoRefresh),
                     className: `text-sm font-medium ${autoRefresh ? 'text-green-600' : 'text-slate-400'}`
-                  }, autoRefresh ? '● Auto' : '○ Manual'),
-                  autoRefresh && e('span', { className: 'text-sm text-slate-500' }, formatCountdown(countdown))
+                  }, autoRefresh ? '● Auto-refresh' : '○ Manual'),
+                  e('span', { className: 'text-xs text-slate-500' }, 
+                    lastUpdated ? `Updated ${formatLastUpdated()}` : 'Loading...'
+                  )
                 ),
                 e('button', {
                   onClick: loadFromSheets,
