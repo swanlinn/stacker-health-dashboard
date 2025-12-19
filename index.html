@@ -132,6 +132,7 @@
       function ChartComponent({ chartData, metricKey }) {
         const canvasRef = useRef(null);
         const chartInstanceRef = useRef(null);
+        const chartDataString = JSON.stringify(chartData);
 
         useEffect(() => {
           if (!canvasRef.current || !chartData || chartData.length === 0) return;
@@ -139,9 +140,21 @@
           // Destroy existing chart before creating new one
           if (chartInstanceRef.current) {
             chartInstanceRef.current.destroy();
+            chartInstanceRef.current = null;
           }
 
           const ctx = canvasRef.current.getContext('2d');
+          
+          // Format value function for tooltip
+          const formatTooltipValue = (value) => {
+            if (metricKey.includes('sales') || metricKey.includes('ars')) {
+              return `${(value / 1000).toFixed(0)}k`;
+            }
+            if (metricKey.includes('pacing')) {
+              return `${value}%`;
+            }
+            return value.toLocaleString();
+          };
           
           chartInstanceRef.current = new Chart(ctx, {
             type: 'bar',
@@ -159,11 +172,12 @@
             options: {
               responsive: true,
               maintainAspectRatio: false,
+              animation: false,
               plugins: {
                 legend: { display: false },
                 tooltip: {
                   callbacks: {
-                    label: (context) => formatValue(metricKey, context.parsed.y)
+                    label: (context) => formatTooltipValue(context.parsed.y)
                   }
                 }
               },
@@ -197,7 +211,7 @@
               chartInstanceRef.current = null;
             }
           };
-        }, [chartData, metricKey]); // Only re-render when data changes
+        }, [chartDataString, metricKey]);
 
         return e('canvas', { ref: canvasRef, style: { height: '120px' } });
       }
