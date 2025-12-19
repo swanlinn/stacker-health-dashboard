@@ -129,108 +129,94 @@
         return `${mins}:${secs.toString().padStart(2, '0')}`;
       };
 
-      function ChartComponent({ chartData, metricKey }) {
+      const ChartComponent = React.memo(function ChartComponent({ chartData, metricKey }) {
         const canvasRef = useRef(null);
         const chartRef = useRef(null);
-        const isInitialized = useRef(false);
-
-        // Create a stable key from the data
-        const dataKey = useMemo(() => {
-          if (!chartData || chartData.length === 0) return '';
-          return chartData.map(d => `${d.week}:${d.value}`).join('|');
-        }, [chartData]);
 
         useEffect(() => {
           if (!canvasRef.current || !chartData || chartData.length === 0) return;
 
-          // Only create chart once or when data actually changes
-          if (!chartRef.current || !isInitialized.current) {
-            const ctx = canvasRef.current.getContext('2d');
-            
-            if (chartRef.current) {
-              chartRef.current.destroy();
-            }
-            
-            chartRef.current = new Chart(ctx, {
-              type: 'bar',
-              data: {
-                labels: chartData.map(d => d.week),
-                datasets: [{
-                  data: chartData.map(d => d.value),
-                  backgroundColor: chartData.map((d, i) => 
-                    i === chartData.length - 1 ? '#3b82f6' : '#94a3b8'
-                  ),
-                  borderRadius: 4,
-                  borderSkipped: false,
-                }]
-              },
-              options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                animation: false,
-                plugins: {
-                  legend: { display: false },
-                  tooltip: {
-                    callbacks: {
-                      label: function(context) {
-                        const val = context.parsed.y;
-                        if (metricKey.includes('sales') || metricKey.includes('ars')) {
-                          return `$${(val / 1000).toFixed(0)}k`;
-                        }
-                        if (metricKey.includes('pacing')) {
-                          return `${val}%`;
-                        }
-                        return val.toLocaleString();
-                      }
-                    }
-                  }
-                },
-                scales: {
-                  y: {
-                    beginAtZero: true,
-                    ticks: { 
-                      font: { size: 11 },
-                      color: '#64748b'
-                    },
-                    grid: {
-                      color: '#e2e8f0',
-                      drawBorder: false
-                    }
-                  },
-                  x: {
-                    ticks: { 
-                      font: { size: 11 },
-                      color: '#64748b'
-                    },
-                    grid: { display: false }
-                  }
-                }
-              }
-            });
-            
-            isInitialized.current = true;
+          // Destroy existing chart if it exists
+          if (chartRef.current) {
+            chartRef.current.destroy();
           }
 
-          return () => {
-            // Don't destroy on every render, only on unmount
-          };
-        }, [dataKey, metricKey]);
+          const ctx = canvasRef.current.getContext('2d');
+          
+          chartRef.current = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: chartData.map(d => d.week),
+              datasets: [{
+                data: chartData.map(d => d.value),
+                backgroundColor: chartData.map((d, i) => 
+                  i === chartData.length - 1 ? '#3b82f6' : '#94a3b8'
+                ),
+                borderRadius: 4,
+                borderSkipped: false,
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              animation: false,
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  callbacks: {
+                    label: function(context) {
+                      const val = context.parsed.y;
+                      if (metricKey.includes('sales') || metricKey.includes('ars')) {
+                        return `${(val / 1000).toFixed(0)}k`;
+                      }
+                      if (metricKey.includes('pacing')) {
+                        return `${val}%`;
+                      }
+                      return val.toLocaleString();
+                    }
+                  }
+                }
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  ticks: { 
+                    font: { size: 11 },
+                    color: '#64748b'
+                  },
+                  grid: {
+                    color: '#e2e8f0',
+                    drawBorder: false
+                  }
+                },
+                x: {
+                  ticks: { 
+                    font: { size: 11 },
+                    color: '#64748b'
+                  },
+                  grid: { display: false }
+                }
+              }
+            }
+          });
 
-        // Cleanup only when component unmounts
-        useEffect(() => {
+          // Cleanup on unmount or when dependencies change
           return () => {
             if (chartRef.current) {
               chartRef.current.destroy();
               chartRef.current = null;
-              isInitialized.current = false;
             }
           };
-        }, []);
+        }, [chartData, metricKey]);
 
         return e('div', { style: { height: '120px', width: '100%' } },
           e('canvas', { ref: canvasRef })
         );
-      }
+      }, (prevProps, nextProps) => {
+        // Custom comparison: only re-render if data actually changed
+        return JSON.stringify(prevProps.chartData) === JSON.stringify(nextProps.chartData) &&
+               prevProps.metricKey === nextProps.metricKey;
+      });
 
       if (!data) {
         return e('div', { className: 'min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-6 flex items-center justify-center' },
