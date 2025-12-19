@@ -129,27 +129,28 @@
         return `${mins}:${secs.toString().padStart(2, '0')}`;
       };
 
-      function ChartComponent({ data, metricKey }) {
+      function ChartComponent({ chartData, metricKey }) {
         const canvasRef = useRef(null);
-        const chartRef = useRef(null);
+        const chartInstanceRef = useRef(null);
 
         useEffect(() => {
-          if (!canvasRef.current || !data || data.length === 0) return;
+          if (!canvasRef.current || !chartData || chartData.length === 0) return;
 
-          if (chartRef.current) {
-            chartRef.current.destroy();
+          // Destroy existing chart before creating new one
+          if (chartInstanceRef.current) {
+            chartInstanceRef.current.destroy();
           }
 
           const ctx = canvasRef.current.getContext('2d');
           
-          chartRef.current = new Chart(ctx, {
+          chartInstanceRef.current = new Chart(ctx, {
             type: 'bar',
             data: {
-              labels: data.map(d => d.week),
+              labels: chartData.map(d => d.week),
               datasets: [{
-                data: data.map(d => d.value),
-                backgroundColor: data.map((d, i) => 
-                  i === data.length - 1 ? '#3b82f6' : '#94a3b8'
+                data: chartData.map(d => d.value),
+                backgroundColor: chartData.map((d, i) => 
+                  i === chartData.length - 1 ? '#3b82f6' : '#94a3b8'
                 ),
                 borderRadius: 4,
                 borderSkipped: false,
@@ -189,12 +190,14 @@
             }
           });
 
+          // Cleanup function
           return () => {
-            if (chartRef.current) {
-              chartRef.current.destroy();
+            if (chartInstanceRef.current) {
+              chartInstanceRef.current.destroy();
+              chartInstanceRef.current = null;
             }
           };
-        }, [data, metricKey]);
+        }, [chartData, metricKey]); // Only re-render when data changes
 
         return e('canvas', { ref: canvasRef, style: { height: '120px' } });
       }
@@ -295,7 +298,7 @@
                 e('div', { className: 'text-sm text-slate-500 mb-4' }, 'Previous: ' + formatValue(key, metric.previous)),
                 showChart && chartData && chartData.length > 0 && e('div', { className: 'mt-4 pt-4 border-t border-slate-200' },
                   e('h4', { className: 'text-xs font-medium text-slate-500 uppercase tracking-wide mb-3' }, 'Historical Trend'),
-                  e(ChartComponent, { data: chartData, metricKey: key })
+                  e(ChartComponent, { chartData: chartData, metricKey: key })
                 )
               );
             })
