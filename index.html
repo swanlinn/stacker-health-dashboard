@@ -3,342 +3,946 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stacker Health Dashboard</title>
+  <title>Stacker KPI Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii02LjQxNSA2LjkzNSAxMTIgMTEyIj4KICA8dGl0bGU+U3RhY2tlcjwvdGl0bGU+CiAgPCEtLSBSb3VuZGVkIGxpZ2h0IHBsYXRlIGtlZXBzIHRoZSBkYXJrIGJhcnMgbGVnaWJsZSBvbiBkYXJrIGJyb3dzZXIgdGFiIGJhcnMgLS0+CiAgPHJlY3QgeD0iLTYuNDE1IiB5PSI2LjkzNSIgd2lkdGg9IjExMiIgaGVpZ2h0PSIxMTIiIHJ4PSIyNCIgZmlsbD0iI2ZmZmZmZiIvPgogIDwhLS0gRm91ciBvZmZzZXQgYmFycywgdG9wIHRvIGJvdHRvbS4gVGhlIG9yaWdpbmFsIGZpbGUgZXhwcmVzc2VkIHRoZSBib3R0b20gYmFyIGFzIGEKICAgICAgIHJvdGF0ZWQvdHJhbnNsYXRlZCByZWN0OyBpdCBpcyByZXNvbHZlZCB0byBwbGFpbiBjb29yZGluYXRlcyBoZXJlIHNvIHRoZSBtYXJrIGlzIHBvcnRhYmxlLiAtLT4KICA8cmVjdCB4PSIxOS44NSIgeT0iMTMuNTkiIHdpZHRoPSI3OS4zMiIgaGVpZ2h0PSIxOS41NiIgZmlsbD0iIzI2MjQ3OCIvPgogIDxyZWN0IHg9IjAiICAgICB5PSIzOS43NyIgd2lkdGg9Ijc5LjQxIiBoZWlnaHQ9IjE5Ljg2IiBmaWxsPSIjMzIyZGExIi8+CiAgPHJlY3QgeD0iMTkuODUiIHk9IjY2LjI1IiB3aWR0aD0iNzkuMzIiIGhlaWdodD0iMTkuNTYiIGZpbGw9IiM2MTVhZWQiLz4KICA8cmVjdCB4PSIwIiAgICAgeT0iOTIuNDMiIHdpZHRoPSI3OS40MSIgaGVpZ2h0PSIxOS44NSIgZmlsbD0iI2JjYjlmZiIvPgo8L3N2Zz4K">
+  <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAABmJLR0QA/wD/AP+gvaeTAAAIGklEQVR4nO3dXYxcdRnH8e9zdikWKbuFtZINrkaFkuCCQiIGEyO9UKrLSwWTRoVoeqMQkBCMXiHGF4igkBoSI1BFjGBiArQQwIuyRo0mloIF07QQtgLysvRt29W2YdnHi5mt2+3s7tlzzsx/5unvk2xoZ86e81x8ezKcOfMfIxF3/zDwUeAMYDlwOtAHvLv+05NqNsllD7AXGAN2Av8AttT/+08zm0gxlLXqQO7eBwwBFwIrgNNadWxpuTHgcWA98LiZ7W3VgZsatLsfD3weuApYCSxq5vGkLb0NPAT8zMz+3OyDNSVodz8J+AZwA7CsGceQjrQZ+CnwgJlNNuMAlQbt7icC3wKuBZZWuW8J5RngRjPbWPWOKwva3b9I7V+fXhtLXo8C15jZy1XtsHTQ7j4A3A18pvw4cgwaA75pZvdVsbNSQbv7JcAvgZOrGEaOaQ8Da8xsd5mdFAra3buBHwPXF92HSAMvAJea2daiO1hwjPVLcb8FvlD0oCJz2A982cw2FPnlBQXt7kuBDcAnixysjE2bdrBv7ECrDysJuDP59NM71q67509PAfikv779pVv/nud3cwddj3kYOLvQlCVdcfldPLfl1RSHlsQc1r/w4q2X5tk2y7VD9xOonZmTxCyS17xBu3sX8BsSvMwQAejv7z0177Z5ztC3AauKjyNSzvLlp57n7h/Ps+2cQdevM19fyVQiBWWZdQEPuXv/vNvO9oS7vw9Yh64zS3voBx6ovwSe1Vxn6J8Dp1Q6kkg5nwK+M9cGDYOu32j0uWZMJFLSze7+idmePCpod19C7a45kXbUDdzj7sc1erLRGfpGdAuotLezqN1zf5Qjgq5/0qThhiJt5uZGVz1mnqGvRp80kc6wBLhp5oOHg67fRadrztJJvlb/gMlh08/QQ8B7WzuPSCmLgG9Pf2B60Fe2dhaRSqxx9/dM/SUDcPdTqK2bIdJpjge+MvWXqTP0xWgRGOlca6b+MBX0hYkGEanCWe5+Pvw/6E+nm0WkEkMAWX0V0IF5NhZpdxdB7Qx9TuJBRKpwrrsvy4AzU08iUoEMOD+jtti4SASDGbWV80UiGMzQzUgSxxkZcFLqKUQq0psBJ6aeQqQivRm1b5wSiaAnI+dyYCIdIFPMEoqCllDM3T31EHmMju7j0KEkX04qiS1evIi+vlzXLrxjghbJwfWSQ0JR0BKKgpZQFLSEoqAlFAUtoShoCUVBSyjdeTfcMTLG2N5DzZxF2lRXd8ZHBvtSj5FL7qDX3rGZPw6/0sxZpE0tWbKI4b+sTj1GLnrJIaEoaAlFQUsoClpCUdASioKWUBS0hKKgJRQFLaEoaAlFQUsoClpCUdASioKWUBS0hKKgJRQFLaEoaAlFQUsoClpCUdASioKWUBS0hKKgJRQFLaEoaAlFQUsoClpCUdASioKWUHIvpzt4dh9mzRxF2tXiE45LPUJu+iZZiUTfJCuxKGgJRUFLKApaQlHQEoqCllAUtISioCUUBS2h5H7rO7Xf/+6/vPnGZOoxJIEPfqiblUPvyrVtxwS99fkJRl6aSD2GJPDOBKwcyretXnJIKApaQlHQEoqCllAUtISioCUUBS2hKGgJRUFLKApaQlHQEoqCllAUtISioCUUBS2hKGgJRUFLKApaQlHQEoqCllAUtISioCUUBS2hKGgJRUFLKApaQlHQEoqCllAUtITSMauPDry/i+6OmVaq1H9a/vOuvklWItE3yUosClpCUdASioKWUBS0hKKgJRQFLaEoaAlFQUsoud9MfvUVGN/fzFGkXXV1wenLU0+RT+6gd+2EnW81cxRpV93dnRO0XnJIKApaQsmAydRDiFRkMgP2pZ5CpCLjGTCWegqRiuzPgD2ppxCpyP4M2J56CpGK7MqA51NPIVKR7RnwXOopRCqyLQP+BuiDshLB9szM3gCeTT2JSAWenXqn8ImkY4iUN2JmO6aC3pB0FJHynoL6vRxm9ldga9JxRMrZCEfenLQu0SAiZR0EHoMjg/41cCjJOCLlbDCzvTAtaDMbBX6VaiKREu6f+sPM+6FvAd5u7SwipbzGtKt0RwRtZv8C7mv1RCIl3G5mh0/CjT6xchO6R1o6wy7g7ukPHBW0mb0OfL9VE4mU8BMzG5/+wGyfKbwT2NL8eUQKexlYO/PBhkGb2QTwdWCiyUOJFHWNmf1n5oOzfuq7/u7h95o6kkgxj5jZo42emG8Zgx9Rf0tRpE2MAlfP9uScQZvZJHAVtWt9IqlNAlea2aw9zrvQjJn9G7jYnXeqnEykgFvM7A9zbZBr5SQz2zw+zqZqZhIp5BHgu/NtlHspsIMHeLPUOCLFDQOrzWzeVwla207a3WbgMjM7mGfj3MvpmvODLONegIEPsKKnl2vRP4hjglmyQw9Tizn36l6FR3X3zwIPAr1F9yEyh4eBL5nZgYX8UuEzrJk9CVwAvFh0HyINTAI/BK5YaMxQ4gw9xd1PBu4FLiu7LznmjVK7zjznpbm5lH4NbGa7zWwV8FW0kqkUtx74WJmYoYIz9HTuPgDcBQxVuV8JbQS4brZ7MxaqKf//6u4rgNuAc5uxfwnhLeAO4M4ir5Vn07QLMu6eAauBG4DzmnUc6TivAbcDv2h0+2dZLbnC6O4XANcBq4BFrTimtJWD1Fbnuh94YvpnAKvW0kvm7t4DXARcAqwElrby+NJSI9SW59oIPDa1bkazJXsPyN27gTOBc+o/g8Ayam/ULAV60DuR7WwPMF7/2Q1so/ZtENuAZ+orCLTc/wC2GZM5TXfI5AAAAABJRU5ErkJggg==">
+  <meta name="theme-color" content="#615aed">
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz@9..40&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    *{font-family:'DM Sans',sans-serif}body{font-size:16px;background:linear-gradient(135deg,#f8f7fc 0%,#f0ecf8 40%,#ece8f4 70%,#f5f3fa 100%);min-height:100vh}.mono{font-family:'JetBrains Mono',monospace}
+    @keyframes slideIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}.animate-slide-in{animation:slideIn .35s ease-out forwards}
+    @keyframes pulseDot{0%,100%{opacity:1}50%{opacity:.5}}.pulse-dot{animation:pulseDot 2s ease-in-out infinite}
+    @keyframes slideRight{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:translateX(0)}}.anim-sr{animation:slideRight .25s ease-out forwards}
+    @keyframes drawerSlide{from{transform:translateX(100%)}to{transform:translateX(0)}}.anim-drawer{animation:drawerSlide .3s cubic-bezier(0.32,0.72,0,1) forwards}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}.anim-fade{animation:fadeIn .15s ease-out}
+    .ttip{position:relative}.ttip .tt{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:6px;padding:6px 12px;background:#1e293b;color:#fff;font-size:12px;font-weight:600;border-radius:8px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s;z-index:10}.ttip .tt::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#1e293b}.ttip:hover .tt{opacity:1}
+    @keyframes highlightPulse{0%{box-shadow:inset 0 0 0 2px rgba(124,58,237,0.6)}50%{box-shadow:inset 0 0 0 2px rgba(124,58,237,0.2)}100%{box-shadow:none}}.row-highlight{animation:highlightPulse 2s ease-out forwards;background:rgba(124,58,237,0.08)!important}
+  </style>
 </head>
-<body>
-  <div id="root"></div>
-  
-  <script>
-    const { useState, useEffect, useRef, createElement: e, useMemo } = React;
+<body><div id="root"></div>
+<script>
+const{useState,useEffect,useRef,useMemo,useCallback,createElement:e,memo}=React;
 
-    function StackerDashboard() {
-      const [viewMode, setViewMode] = useState('overview');
-      const [timeRange, setTimeRange] = useState('current');
-      const [loading, setLoading] = useState(false);
-      const [error, setError] = useState(null);
-      const [data, setData] = useState(null);
-      const [autoRefresh, setAutoRefresh] = useState(true);
-      const [lastUpdated, setLastUpdated] = useState(null);
+// Brand assets, inlined so the dashboard stays a single self-contained file.
+const STACKER_LOGO='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MjguNjMgMTEyLjI4Ij4KICA8dGl0bGU+U3RhY2tlcjwvdGl0bGU+CiAgPGc+CiAgICA8cmVjdCB4PSIxOS44NSIgeT0iMTMuNTkiIHdpZHRoPSI3OS4zMiIgaGVpZ2h0PSIxOS41NiIgZmlsbD0iIzI2MjQ3OCIvPgogICAgPHJlY3QgeD0iMCIgICAgIHk9IjM5Ljc3IiB3aWR0aD0iNzkuNDEiIGhlaWdodD0iMTkuODYiIGZpbGw9IiMzMjJkYTEiLz4KICAgIDxyZWN0IHg9IjE5Ljg1IiB5PSI2Ni4yNSIgd2lkdGg9Ijc5LjMyIiBoZWlnaHQ9IjE5LjU2IiBmaWxsPSIjNjE1YWVkIi8+CiAgICA8cmVjdCB4PSIwIiAgICAgeT0iOTIuNDMiIHdpZHRoPSI3OS40MSIgaGVpZ2h0PSIxOS44NSIgZmlsbD0iI2JjYjlmZiIvPgogIDwvZz4KICA8ZyBmaWxsPSIjMTQxNzM5Ij4KICAgIDxwYXRoIGQ9Ik05NzIsNTQ4YzAtMTYuNDQtOC4yNy0yNS43LTE3LjYzLTI5LjA1LTE2LjE0LTUuOTEtMzIuMjksMS41OC0zOC41LDguMDhsMTAuNTQsMTYuNDRjMi40Ni0xMS4xMiwxMC4zNC0xOS40LDE3LjkyLTE5LjQsNS4zMiwwLDguMjcsNS4yMiw4LjE3LDExLjgybC0uMDksMTJjLTI5LjE1LDAtNDAuMTgsMTIuNDEtNDAuODcsMjMuNDQtLjY5LDEwLjY0LDcuMDksMTcuNTMsMTcuODIsMTcuNTNhMzEuMTQsMzEuMTQsMCwwLDAsMjMuMTQtMTAuMTRsLS4wOSw5Ljk0LDI4Ljc1LTguMjdMOTcyLDU2OC42M1ptLTE5LjUsMjUuMjFhMTkuNSwxOS41LDAsMCwxLTEwLjUzLDMuMzVjLTYuNiwwLTEwLjI0LTMuOTQtMTAuMjQtOS4yNiwwLTUuODEsNS4xMi0xMy4yOSwyMC43Ny0xNFoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC02NDIuNCAtNDg5Ljk1KSIvPgogICAgPHBhdGggZD0iTTg4NC40Myw1NjguNDNWNTI4aDE4LjQxdi02LjZIODg0LjQzVjUwMy4yNWwtMzEuOTEsMjQuNTJoMTIuMTJ2NDAuNTdjMCwxMy42OCw3LjM4LDIwLjU4LDE4LjIxLDIwLjU4LDEwLjE1LDAsMTkuMjEtNS4yMiwyMi42NS0xMy41OUExOS4yMywxOS4yMywwLDAsMSw4OTMuNjksNTc5Qzg4Ny43OCw1NzksODg0LjQzLDU3NS42Miw4ODQuNDMsNTY4LjQzWiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTY0Mi40IC00ODkuOTUpIi8+CiAgICA8cGF0aCBkPSJNODI1LjM0LDU0NC4xMWMtOS45NC00LjMzLTE0LjY3LTguNTctMTQuNjctMTMuNTksMC00LjcyLDMuNzQtOC4wNyw5LjI2LTguMDcsMTIuNDEsMCwxNy4zMywxNC4xOCwxOC45MSwxNy44Mmw3Ljg3LTEyLjhjLTYuNC02LjMtMTYuOTMtMTAuNjQtMjQuOTEtMTAuNjQtMTQuNjcsMC0yNy40Nyw4LjE4LTI3LjQ3LDIwLjU5LDAsOC4wNywzLjQ0LDE1LjI2LDE4LjgsMjIuNTUsMTEuMTMsNC43MiwxNy4xNCw4Ljg2LDE3LjE0LDE0LDAsNC41My00LDcuNzgtMTAuOTMsNy43OC0xMi4yMSwwLTE4LjYxLTEyLTE5LjctMTkuMTFsLTguMzcsMTMuNjlBNDAuMTcsNDAuMTcsMCwwLDAsODAyLDU4NWEzNi42MSwzNi42MSwwLDAsMCwxNy4zMyw0YzE2LjY0LDAsMzAuMjMtOS4zNiwzMC4yMy0yMi4xNkM4NDkuNTcsNTU3LjIxLDg0MC43MSw1NTAuODEsODI1LjM0LDU0NC4xMVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC02NDIuNCAtNDg5Ljk1KSIvPgogICAgPHBhdGggZD0iTTEwMjUuNjQsNTczLjE2Yy0xNC4xOC0uMi0yNC40Mi0xMC41NC0yNC40Mi0yNy42NywwLTE0LDYuODktMjEuNTcsMTYuNDQtMjEuNTcsNi40LDAsMTQuODcsNi42LDE4LjUyLDIyLjg1LDAsMCw2LjQtMTAuMTQsMTEuMzItMThhMzcuNiwzNy42LDAsMCwwLTI4LjA2LTEyLjIxLDM2LjE0LDM2LjE0LDAsMCwwLTM2LjczLDM2LjE0YzAsMjAuMzgsMTQuMjcsMzYuMzQsMzUuMzUsMzYuMzQsMTguMTIsMCwyOC41NS0xMS40MywyOS41NC0yNi42OUMxMDQyLjg3LDU2OS43MSwxMDM0LjUsNTczLjI2LDEwMjUuNjQsNTczLjE2WiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTY0Mi40IC00ODkuOTUpIi8+CiAgICA8cGF0aCBkPSJNMTE2Ny4xNSw1MTYuMzRjLTE5LjQsMC0zMy41OCwxNC42OC0zMy41OCwzNiwwLDIwLjM5LDEzLjM5LDM2LjY0LDM0LjQ2LDM2LjY0LDE5LjQsMCwyOC43Ni0xMS41MywyOS4zNS0yNy4zOGEyNS4zOCwyNS4zOCwwLDAsMS0yMS43NywxMS41MmMtMTEuNTIsMC0yNC04Ljg2LTI0LjYxLTI2LjM5aDQ3LjU2QzExOTguNTYsNTI5LjA1LDExODQsNTE2LjM0LDExNjcuMTUsNTE2LjM0Wm0tMTYuMDYsMjMuOTNjMS4zOC0xMS44Miw3LTE2LjY0LDE0LjI4LTE2LjY0LDkuMjYsMCwxMy4xLDguMzcsMTMuMSwxNi42NFoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC02NDIuNCAtNDg5Ljk1KSIvPgogICAgPHBhdGggZD0iTTEyNTYuNzYsNTE2LjgzYy05LjM2LDAtMTYuMzUsNi42LTIxLjM3LDE0LjY4VjUxNC4wOEwxMjA1LDUyNy42N2wxMC42Myw1LjcxdjQyLjkzbC0xMC42MywxMWg0MGwtOS41NS0xMC4yNFY1NDYuNzdjMC0xMC4xNCw4Ljc2LTIzLDI1LjExLTguODZMMTI3MSw1MjEuMDdTMTI2NS43Miw1MTYuODMsMTI1Ni43Niw1MTYuODNaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtNjQyLjQgLTQ4OS45NSkiLz4KICAgIDxwb2x5Z29uIHBvaW50cz0iNDg4LjYgMjguNDYgNDU0LjA0IDI4LjM2IDQ1NC4wNCA0Ny43NiA0MzYuNTEgNjEuNzQgNDM2LjUxIDAgNDA2LjA4IDEzLjU5IDQxNi43MiAxOS4zIDQxNi43MiA4Ni4zNiA0MDYuMDggOTcuMzkgNDQ2LjA2IDk3LjM5IDQzNi41MSA4OC4zMyA0MzYuNTEgNjkuODIgNDQwLjg0IDY2LjU3IDQ2MC44MyA4OC43MiA0NTEuNjggOTcuMzkgNDk0LjEyIDk3LjM5IDQ1Ni4xMSA1NC43NSA0ODguNiAyOC40NiIvPgogIDwvZz4KPC9zdmc+Cg==';
+const STACKER_MARK='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii02LjQxNSA2LjkzNSAxMTIgMTEyIj4KICA8dGl0bGU+U3RhY2tlcjwvdGl0bGU+CiAgPCEtLSBSb3VuZGVkIGxpZ2h0IHBsYXRlIGtlZXBzIHRoZSBkYXJrIGJhcnMgbGVnaWJsZSBvbiBkYXJrIGJyb3dzZXIgdGFiIGJhcnMgLS0+CiAgPHJlY3QgeD0iLTYuNDE1IiB5PSI2LjkzNSIgd2lkdGg9IjExMiIgaGVpZ2h0PSIxMTIiIHJ4PSIyNCIgZmlsbD0iI2ZmZmZmZiIvPgogIDwhLS0gRm91ciBvZmZzZXQgYmFycywgdG9wIHRvIGJvdHRvbS4gVGhlIG9yaWdpbmFsIGZpbGUgZXhwcmVzc2VkIHRoZSBib3R0b20gYmFyIGFzIGEKICAgICAgIHJvdGF0ZWQvdHJhbnNsYXRlZCByZWN0OyBpdCBpcyByZXNvbHZlZCB0byBwbGFpbiBjb29yZGluYXRlcyBoZXJlIHNvIHRoZSBtYXJrIGlzIHBvcnRhYmxlLiAtLT4KICA8cmVjdCB4PSIxOS44NSIgeT0iMTMuNTkiIHdpZHRoPSI3OS4zMiIgaGVpZ2h0PSIxOS41NiIgZmlsbD0iIzI2MjQ3OCIvPgogIDxyZWN0IHg9IjAiICAgICB5PSIzOS43NyIgd2lkdGg9Ijc5LjQxIiBoZWlnaHQ9IjE5Ljg2IiBmaWxsPSIjMzIyZGExIi8+CiAgPHJlY3QgeD0iMTkuODUiIHk9IjY2LjI1IiB3aWR0aD0iNzkuMzIiIGhlaWdodD0iMTkuNTYiIGZpbGw9IiM2MTVhZWQiLz4KICA8cmVjdCB4PSIwIiAgICAgeT0iOTIuNDMiIHdpZHRoPSI3OS40MSIgaGVpZ2h0PSIxOS44NSIgZmlsbD0iI2JjYjlmZiIvPgo8L3N2Zz4K';
 
-      useEffect(() => {
-        if (!autoRefresh) return;
-        
-        const timer = setInterval(() => {
-          loadFromSheets();
-        }, 900000); // 15 minutes in milliseconds
+// Per-quarter department tab config. Q3's sheet has a broader "Dept" column plus a more
+// granular "Team" column; Q2's sheet only has "Dept" (which already IS team-level granularity).
+const DEPT_CFG_BY_QUARTER={
+  q2:{overview:{l:'Overview',i:'📊'},Marketing:{l:'Marketing',i:'📣'},Sales:{l:'Sales',i:'💰'},Accounts:{l:'Accounts',i:'🤝'},Newsroom:{l:'Newsroom',i:'📰'},Product:{l:'Product',i:'🛠'},Ops:{l:'Ops',i:'⚙️'}},
+  q3:{overview:{l:'Overview',i:'📊'},Marketing:{l:'Marketing',i:'📣'},Revenue:{l:'Revenue',i:'💰'},Operations:{l:'Operations',i:'⚙️'},'Customer Success':{l:'Customer Success',i:'🤝'},Product:{l:'Product',i:'🛠'}}
+};
+// Team-level icons, used as a secondary filter row within a Q3 dept tab when that dept
+// spans more than one team (e.g. Revenue → Sales / Channel Partnership).
+const TEAM_ICONS={Marketing:'📣',Sales:'💵','Channel Partnership':'🔗',Ops:'⚙️',Accounts:'🧾','Value Team':'💎',Product:'🛠',Distribution:'📡',Editorial:'📰',Newsroom:'📰'};
+// Color palette for the compact overview rows, keyed by Team (Q3) or Dept-as-team (Q2).
+const TEAM_PALETTE=[
+  {bar:'bg-pink-500',chip:'bg-pink-50 text-pink-700 border-pink-200',tint:'bg-pink-50/60',border:'border-pink-300',name:'text-pink-800'},
+  {bar:'bg-emerald-500',chip:'bg-emerald-50 text-emerald-700 border-emerald-200',tint:'bg-emerald-50/60',border:'border-emerald-300',name:'text-emerald-800'},
+  {bar:'bg-teal-500',chip:'bg-teal-50 text-teal-700 border-teal-200',tint:'bg-teal-50/60',border:'border-teal-300',name:'text-teal-800'},
+  {bar:'bg-cyan-500',chip:'bg-cyan-50 text-cyan-700 border-cyan-200',tint:'bg-cyan-50/60',border:'border-cyan-300',name:'text-cyan-800'},
+  {bar:'bg-amber-500',chip:'bg-amber-50 text-amber-700 border-amber-200',tint:'bg-amber-50/60',border:'border-amber-300',name:'text-amber-800'},
+  {bar:'bg-fuchsia-500',chip:'bg-fuchsia-50 text-fuchsia-700 border-fuchsia-200',tint:'bg-fuchsia-50/60',border:'border-fuchsia-300',name:'text-fuchsia-800'},
+  {bar:'bg-blue-500',chip:'bg-blue-50 text-blue-700 border-blue-200',tint:'bg-blue-50/60',border:'border-blue-300',name:'text-blue-800'},
+  {bar:'bg-indigo-500',chip:'bg-indigo-50 text-indigo-700 border-indigo-200',tint:'bg-indigo-50/60',border:'border-indigo-300',name:'text-indigo-800'},
+  {bar:'bg-rose-500',chip:'bg-rose-50 text-rose-700 border-rose-200',tint:'bg-rose-50/60',border:'border-rose-300',name:'text-rose-800'},
+  {bar:'bg-orange-500',chip:'bg-orange-50 text-orange-700 border-orange-200',tint:'bg-orange-50/60',border:'border-orange-300',name:'text-orange-800'},
+  {bar:'bg-violet-500',chip:'bg-violet-50 text-violet-700 border-violet-200',tint:'bg-violet-50/60',border:'border-violet-300',name:'text-violet-800'},
+  {bar:'bg-lime-500',chip:'bg-lime-50 text-lime-700 border-lime-200',tint:'bg-lime-50/60',border:'border-lime-300',name:'text-lime-800'}
+];
+const TEAM_COLOR_IDX={Marketing:0,Sales:1,'Channel Partnership':2,Ops:3,Accounts:4,'Value Team':5,Product:6,Distribution:7,Editorial:8,Newsroom:9};
+function teamColorFor(name){
+  if(!name)return TEAM_PALETTE[TEAM_PALETTE.length-1];
+  if(TEAM_COLOR_IDX[name]!==undefined)return TEAM_PALETTE[TEAM_COLOR_IDX[name]];
+  let h=0;for(let i=0;i<name.length;i++)h=(h*31+name.charCodeAt(i))>>>0;
+  return TEAM_PALETTE[h%TEAM_PALETTE.length];
+}
+const UNIT_OV={'total-30-day-ars':'$','renewal-tcv':'$','renewed-tcv':'$','new-brand-mrr-added':'$','new-brand-pipeline-added':'$','portal-active-users':'%','stories-on-time':'%'};
+const NAME_OV={'new-brand-mrr-added':'New Brand MRR Added (Closed Won)'};
+function dn(m){for(const[k,n]of Object.entries(NAME_OV))if(m.id.includes(k))return n;return m.name}
+function gdu(m){for(const[k,u]of Object.entries(UNIT_OV))if(m.id.includes(k))return u;return m.unit||''}
+const DOLLAR_UNITS=['$','MRR ($)','TCV ($)','TCV','US Dollar','Monthly Recurring Revenue ($)'];
+// The sheet's unit column spells this "Percentage"; older rows use "%". Match either, in any case,
+// so the value formats as 75% instead of being suffixed with the literal word "percentage".
+function isPctUnit(u){if(!u)return false;const t=String(u).trim().toLowerCase();return t==='%'||t==='percent'||t==='percentage'}
+function isDollarUnit(u){if(!u)return false;const t=String(u).trim().toLowerCase();return DOLLAR_UNITS.some(d=>d.toLowerCase()===t)}
+function fv(v,u){if(v===null||v===undefined||isNaN(v))return'—';if(isPctUnit(u))return`${Number(v).toFixed(0)}%`;if(isDollarUnit(u))return Math.abs(v)>=1000000?`$${(v/1000000).toFixed(3)}M`:Math.abs(v)>=1000?`$${(v/1000).toFixed(2)}k`:`$${Number(v).toFixed(2)}`;return Math.round(v).toLocaleString()}
+function su(u){if(!u||isPctUnit(u)||isDollarUnit(u))return'';if(u==='Contacts')return'contacts';if(u==='Sites')return'sites';return u.toLowerCase()}
+// Label for the unit badge on a metric card. The sheet spells percentage units out as the word
+// "Percentage"; show the symbol instead. Other units keep the sheet's own wording.
+function unitLabel(u){if(!u)return'';return isPctUnit(u)?'%':u}
+function fd(s){if(!s)return'';const d=new Date(s);if(isNaN(d))return s;return['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]+' '+d.getDate()}
+function wl(wd){return wd?`${fd(wd.start)} – ${fd(wd.end)}`:''}
+function sColor(p,inv){const g=inv?p<=0:p>=0,n=Math.abs(p)<=10;if(g)return{badge:'bg-gradient-to-r from-green-500 to-green-600 text-white',text:'text-green-600',dot:'bg-green-500',gauge:'#22c55e'};if(n)return{badge:'bg-gradient-to-r from-yellow-500 to-yellow-600 text-white',text:'text-yellow-600',dot:'bg-yellow-500',gauge:'#eab308'};return{badge:'bg-gradient-to-r from-red-500 to-red-600 text-white',text:'text-red-600',dot:'bg-red-500',gauge:'#ef4444'}}
+function avgSt(a,t,inv){if(a===null||!t)return null;const p=((a-t)/t)*100,r=Math.round(p),s=r>0?'+':'';if(inv){if(p<=0)return{label:'On Target',pct:`${s}${r}%`,color:'bg-green-50 text-green-700 border-green-200',dc:'bg-green-500'};if(p<=20)return{label:'Near Target',pct:`${s}${r}%`,color:'bg-yellow-50 text-yellow-700 border-yellow-200',dc:'bg-yellow-500'};return{label:'Off Target',pct:`${s}${r}%`,color:'bg-red-50 text-red-700 border-red-200',dc:'bg-red-500'};}if(p>=0)return{label:'On Target',pct:`${s}${r}%`,color:'bg-green-50 text-green-700 border-green-200',dc:'bg-green-500'};if(p>=-20)return{label:'Near Target',pct:`${s}${r}%`,color:'bg-yellow-50 text-yellow-700 border-yellow-200',dc:'bg-yellow-500'};return{label:'Off Target',pct:`${s}${r}%`,color:'bg-red-50 text-red-700 border-red-200',dc:'bg-red-500'}}
+function pvt(v,t){return(!t||t===0||v===null)?null:Math.round((v-t)/t*100)}
+function gwt(m,w){return m.weeklyTargets?(m.weeklyTargets[w]??null):null}
+function wtd(m){return m.weeklyTargetRaw?m.weeklyTargetRaw.replace(/\n/g,' · '):null}
+function rw(cw){return{w1:cw-2>=1?cw-2:null,w2:cw-1>=1?cw-1:null}}
+function rpv(m,cw){const{w1,w2}=rw(cw);const v1=w1?m.values[w1]:null,v2=w2?m.values[w2]:null;if(m.aggregation==='sum')return(v1===null&&v2===null)?null:(v1||0)+(v2||0);const vs=[v1,v2].filter(v=>v!==null);return vs.length?vs.reduce((a,b)=>a+b,0)/vs.length:null}
+// Quarter-to-date rollup. `cw` is the most recent COMPLETED week (determineCurrentWeek
+// returns the in-progress week minus 1), so it must be INCLUDED here — using w<cw
+// silently dropped the latest completed week from every quarter-to-date total.
+function q2p(m,cw){if(m.aggregation==='sum'){let t=0,h=false;for(let w=1;w<=cw;w++)if(m.values[w]!==null){t+=m.values[w];h=true;}return h?t:null}const vs=[];for(let w=1;w<=cw;w++)if(m.values[w]!==null)vs.push(m.values[w]);return vs.length?vs.reduce((a,b)=>a+b,0)/vs.length:null}
+function isRenTCV(m){return m.id.includes('renewal-tcv')||m.id.includes('renewed-tcv')}
+function isNewBrandMRR(m){return m.id.includes('new-brand-mrr-added')}
+function hasAnyWeeklyTarget(m){return m.weeklyTargets&&Object.values(m.weeklyTargets).some(v=>v!==null)}
+function isLatestValueMetric(m){return m.id.includes('event-attendee')}
+function latestWeekValue(m,cw){for(let w=cw;w>=1;w--)if(m.values[w]!==null)return m.values[w];return null}
+function dealsForWeek(deals,wd){if(!deals||!deals.length||!wd||!wd.start||!wd.end)return[];const wS=new Date(wd.start),wE=new Date(wd.end);wS.setHours(0,0,0,0);wE.setHours(23,59,59,999);return deals.filter(d=>{if(!d.closeDate)return false;const cd=new Date(d.closeDate);if(isNaN(cd))return false;cd.setHours(12,0,0,0);return cd>=wS&&cd<=wE})}
+function dateInWeek(dateStr,wd){if(!dateStr||!wd||!wd.start||!wd.end)return false;const d=new Date(dateStr),wS=new Date(wd.start),wE=new Date(wd.end);if(isNaN(d))return false;d.setHours(12,0,0,0);wS.setHours(0,0,0,0);wE.setHours(23,59,59,999);return d>=wS&&d<=wE}function gaugeColor(p){return p>=100?'#22c55e':'#cbd5e1'}
+// ── Calendar-quarter helpers ──────────────────────────────────────────────
+// Deal drawers have their own quarter tabs, so they need windows for quarters other than the
+// one loaded. Year is taken from the loaded quarter's first week.
+function quarterYear(weekDates){const s=weekDates&&weekDates.length?new Date(weekDates[0].start):null;return(s&&!isNaN(s))?s.getFullYear():new Date().getFullYear()}
+function quarterWindow(qKey,year){const qn=parseInt(String(qKey).replace(/[^0-9]/g,''),10)||1;const sm=(qn-1)*3;return{start:new Date(year,sm,1,0,0,0,0),end:new Date(year,sm+3,0,23,59,59,999)}}
+function inWindow(dateStr,win){if(!dateStr||!win)return false;const d=new Date(dateStr);if(isNaN(d))return false;d.setHours(12,0,0,0);return d>=win.start&&d<=win.end}
+function realizedInWindow(dateStr,win){if(!inWindow(dateStr,win))return false;const d=new Date(dateStr);d.setHours(12,0,0,0);return d<=new Date()}
+// Which date decides the quarter a regular (non-pilot) sales deal lands in.
+// Which date puts a "Regular Won" sales deal in a quarter: the initial close date (column J),
+// falling back to the contract effective date (column K) only if close date is blank.
+// "Paid Pilot Conversion" rows are not routed through here — they are placed by their pilot
+// start and conversion start dates instead (see pilotApplicable / salesDealsForWeek).
+function salesEffectiveDate(d){return d.closeDate||d.contractEffectiveDate||''}
+function sourceInfo(src){if(!src||!src.trim())return null;const s=src.trim();if(!s.startsWith('http'))return{name:s,url:null};try{const h=new URL(s).hostname.replace(/^(www|app|go|api)\./,'');const d=h.split('.')[0];const map={hubspot:'HubSpot',salesforce:'Salesforce',google:'Google',airtable:'Airtable',slack:'Slack',notion:'Notion',asana:'Asana',jira:'Jira',github:'GitHub',figma:'Figma',stripe:'Stripe',intercom:'Intercom',amplitude:'Amplitude',mixpanel:'Mixpanel',segment:'Segment',zendesk:'Zendesk',sheets:'Google Sheets',docs:'Google Docs',drive:'Google Drive',looker:'Looker',metabase:'Metabase',clickup:'ClickUp',linear:'Linear',chartmogul:'ChartMogul',close:'Close CRM',pipedrive:'Pipedrive',monday:'Monday',trello:'Trello',confluence:'Confluence'};const name=map[d.toLowerCase()]||(d.charAt(0).toUpperCase()+d.slice(1));return{name,url:s}}catch(e){return{name:s,url:null}}}
+function getQ2Actual(m,cw){if(m.q2Actual!=null)return m.q2Actual;if(isLatestValueMetric(m))return latestWeekValue(m,cw);return q2p(m,cw)}
 
-        return () => clearInterval(timer);
-      }, [autoRefresh]);
+const Gauge=memo(function Gauge({progress,color,label}){const p=Math.min(Math.max(progress||0,0),150)/100,R=58,S=12,cx=80,cy=70;function a(sA,eA){const x1=cx+R*Math.cos(sA),y1=cy-R*Math.sin(sA),x2=cx+R*Math.cos(eA),y2=cy-R*Math.sin(eA);return`M ${x1} ${y1} A ${R} ${R} 0 ${Math.abs(sA-eA)>Math.PI?1:0} 1 ${x2} ${y2}`}return e('svg',{viewBox:'0 0 160 88',className:'w-full max-w-[170px] mx-auto'},e('path',{d:a(Math.PI,0),fill:'none',stroke:'#e2e8f0',strokeWidth:S,strokeLinecap:'round'}),e('path',{d:a(Math.PI,Math.PI-Math.PI*Math.min(p,1)),fill:'none',stroke:color||'#cbd5e1',strokeWidth:S,strokeLinecap:'round'}),e('text',{x:cx,y:cy-6,textAnchor:'middle',fill:'#1e293b',style:{fontSize:'20px',fontWeight:700,fontFamily:"'JetBrains Mono',monospace"}},label||`${Math.round(progress||0)}%`))});
 
-      useEffect(() => {
-        loadFromSheets();
-      }, []);
+const DualGauge=memo(function DualGauge({pOrganic,pTotal,label}){
+  const p1=Math.min(Math.max(pOrganic||0,0),150)/100;
+  const p2=Math.min(Math.max(pTotal||0,0),150)/100;
+  const R=58,S=12,cx=80,cy=70;
+  function a(sA,eA){const x1=cx+R*Math.cos(sA),y1=cy-R*Math.sin(sA),x2=cx+R*Math.cos(eA),y2=cy-R*Math.sin(eA);return`M ${x1} ${y1} A ${R} ${R} 0 ${Math.abs(sA-eA)>Math.PI?1:0} 1 ${x2} ${y2}`}
+  const endTotal=Math.PI-Math.PI*Math.min(p2,1);
+  const endOrganic=Math.PI-Math.PI*Math.min(p1,1);
+  return e('svg',{viewBox:'0 0 160 100',className:'w-full max-w-[180px] mx-auto'},
+    e('path',{d:a(Math.PI,0),fill:'none',stroke:'#e2e8f0',strokeWidth:S,strokeLinecap:'round'}),
+    p2>p1&&e('path',{d:a(endOrganic,endTotal),fill:'none',stroke:'#f59e0b',strokeWidth:S,strokeLinecap:'round'}),
+    p1>0&&e('path',{d:a(Math.PI,endOrganic),fill:'none',stroke:'#10b981',strokeWidth:S,strokeLinecap:'round'}),
+    e('text',{x:cx,y:cy-6,textAnchor:'middle',fill:'#1e293b',style:{fontSize:'18px',fontWeight:700,fontFamily:"'JetBrains Mono',monospace"}},label||`${Math.round(pTotal||0)}%`),
+    e('line',{x1:12,y1:cy+16,x2:22,y2:cy+16,stroke:'#10b981',strokeWidth:3,strokeLinecap:'round'}),
+    e('text',{x:26,y:cy+19,fill:'#64748b',style:{fontSize:'8px',fontWeight:600}},'New Brand'),
+    e('line',{x1:82,y1:cy+16,x2:92,y2:cy+16,stroke:'#f59e0b',strokeWidth:3,strokeLinecap:'round'}),
+    e('text',{x:96,y:cy+19,fill:'#64748b',style:{fontSize:'8px',fontWeight:600}},'Pilot Conv.'))});
 
-      const loadFromSheets = async () => {
-        setLoading(true);
-        setError(null);
+const BarChart=memo(function BarChart({metric,weekDates,currentWeek,timeRange,monthWeeks,onBarClick,selectedWeek,maxWeek,renewalDeals,salesDeals}){
+  const ref=useRef(null),chRef=useRef(null),du=gdu(metric),clickable=isRenTCV(metric)||isNewBrandMRR(metric);
+  const stacked=false;
+  const salesStacked=!!salesDeals&&salesDeals.length>0&&isNewBrandMRR(metric);
+  const cw=useMemo(()=>{const mx=maxWeek||currentWeek;if(mx<1)return[];if(timeRange==='fourWeek'){const s=Math.max(1,mx-3),w=[];for(let i=s;i<=mx;i++)w.push(i);return w}const w=[];for(let i=1;i<=mx;i++)w.push(i);return w},[currentWeek,timeRange,maxWeek]);
 
-        try {
-          const response = await fetch('/api/sheets');
-          
-          if (!response.ok) {
-            throw new Error(`Failed to fetch: ${response.statusText}`);
-          }
+  // Compute renewal stacked breakdown per week
+  const stackData=useMemo(()=>{if(!stacked)return null;return cw.map(w=>{const wd=weekDates.find(d=>d.week===w);const wDeals=dealsForWeek(renewalDeals,wd);let q2=0,q3=0,un=0;wDeals.forEach(d=>{const v=parseFloat(String(d.tcv).replace(/[$,]/g,''));if(isNaN(v))return;const qs=(d.quotaStatus||'').toLowerCase();const hasQ2=qs.includes('q2'),hasQ3=qs.includes('q3');if(hasQ2)q2+=v;else if(hasQ3)q3+=v;else un+=v});return{q2,q3,un,total:q2+q3+un}})},[stacked,cw,weekDates,renewalDeals]);
 
-          const processedData = await response.json();
-          setData(processedData);
-          setLastUpdated(new Date());
-          
-        } catch (err) {
-          setError(err.message);
-          console.error('Error loading data:', err);
-        } finally {
-          setLoading(false);
-        }
-      };
+  // Compute sales stacked breakdown per week (Regular by close date, Pilot/Conv by start dates)
+  const salesStackData=useMemo(()=>{if(!salesStacked)return null;return cw.map(w=>{const wd=weekDates.find(d=>d.week===w);let reg=0,pilot=0,conv=0;(salesDeals||[]).forEach(d=>{const isPil=(d.category||'').toLowerCase().includes('paid pilot');if(!isPil){if(dateInWeek(salesEffectiveDate(d),wd))reg+=parseVal(d.goalMRR)}else{if(dateInWeek(d.pilotStartDate,wd))pilot+=parseVal(d.paidPilotMRR);if(dateInWeek(d.conversionStartDate,wd))conv+=parseVal(d.conversionMRR)}});return{reg,pilot,conv,total:reg+pilot+conv}})},[salesStacked,cw,weekDates,salesDeals]);
 
-      const formatValue = (key, value) => {
-        if (key.includes('sales') || key.includes('ars')) return `$${(value / 1000).toFixed(0)}k`;
-        if (key.includes('pacing')) return `${value}%`;
-        return value.toLocaleString();
-      };
+  const anyStacked=stacked||salesStacked;
 
-      const getMetricLabel = (key) => {
-        const labels = {
-          weeklyActiveUsers: 'Weekly Active Users',
-          connectWeeklyActiveSites: 'Connect Weekly Active Sites',
-          newMeetings: 'New Meetings',
-          salesPipelineNegotiations: 'Sales Pipeline (Negotiations)',
-          connectStoryPacing: 'Connect Story Pacing',
-          arsOver35Days: 'ARs Over 35 Days Past Due'
-        };
-        return labels[key] || key;
-      };
+  useEffect(()=>{
+    if(!ref.current||!cw.length)return;if(chRef.current)chRef.current.destroy();
+    const ctx=ref.current.getContext('2d'),vals=cw.map(w=>metric.values[w]),tgts=cw.map(w=>gwt(metric,w)),hasT=tgts.some(t=>t!==null);
+    const all=[...vals.filter(v=>v!==null),...tgts.filter(t=>t!==null)],sugMax=all.length?Math.max(...all)/0.7:100;
+    const lastBar=cw[cw.length-1];
 
-      const getTrendIcon = (change) => {
-        if (Math.abs(change) < 1) return '−';
-        return change > 0 ? '↑' : '↓';
-      };
+    // Total label plugin
+    const blP={id:'bl',afterDatasetsDraw(ch){const c=ch.ctx,ys=ch.scales.y;cw.forEach((w,i)=>{const v=stacked&&stackData?stackData[i].total:salesStacked&&salesStackData?salesStackData[i].total:vals[i];if(v===null||v===undefined||v===0)return;const meta=ch.getDatasetMeta(0);if(!meta.data[i])return;const xPos=meta.data[i].x;const yPos=anyStacked?ys.getPixelForValue(v):meta.data[i].y;c.save();c.fillStyle='#1e293b';c.font='bold 11px sans-serif';c.textAlign='center';c.textBaseline='bottom';c.fillText(fv(v,du),xPos,yPos-4);c.restore()})}};
+    const mbP=timeRange==='q2'?{id:'mb',beforeDraw(ch){const c=ch.ctx,xs=ch.scales.x,ys=ch.scales.y;const cols=['rgba(124,58,237,0.04)','rgba(16,185,129,0.04)','rgba(168,85,247,0.04)'];Object.entries(monthWeeks||{}).forEach(([n,weeks],mi)=>{const idx=weeks.map(w=>cw.indexOf(w)).filter(i=>i!==-1);if(!idx.length)return;const f=Math.min(...idx),l=Math.max(...idx);const x1=f===0?xs.left:(xs.getPixelForValue(f)+xs.getPixelForValue(f-1))/2;const x2=l===cw.length-1?xs.right:(xs.getPixelForValue(l)+xs.getPixelForValue(l+1))/2;c.save();c.fillStyle=cols[mi%3];c.fillRect(x1,ys.top,x2-x1,ys.bottom-ys.top);c.fillStyle='#94a3b8';c.font='bold 10px sans-serif';c.textAlign='center';c.fillText(n,(x1+x2)/2,ys.top+14);c.restore()})}}:null;
 
-      const getTrendColor = (key, change) => {
-        const isNegativeGood = key === 'arsOver35Days';
-        if (Math.abs(change) < 1) return 'text-gray-500';
-        if (isNegativeGood) return change < 0 ? 'text-green-600' : 'text-red-600';
-        return change > 0 ? 'text-green-600' : 'text-red-600';
-      };
-
-      const filterMetrics = () => {
-        if (!data) return {};
-        const metrics = data.metrics;
-        if (viewMode === 'overview') return metrics;
-        if (viewMode === 'product') return { 
-          weeklyActiveUsers: metrics.weeklyActiveUsers, 
-          connectWeeklyActiveSites: metrics.connectWeeklyActiveSites, 
-          connectStoryPacing: metrics.connectStoryPacing 
-        };
-        if (viewMode === 'sales') return { 
-          newMeetings: metrics.newMeetings, 
-          salesPipelineNegotiations: metrics.salesPipelineNegotiations 
-        };
-        if (viewMode === 'finance') return { 
-          salesPipelineNegotiations: metrics.salesPipelineNegotiations, 
-          arsOver35Days: metrics.arsOver35Days 
-        };
-        return metrics;
-      };
-
-      const getTimeRangeLabel = () => {
-        if (timeRange === 'current') return 'Current Week';
-        if (timeRange === 'fourWeek') return '4-Week Average';
-        return '13-Week Average';
-      };
-
-      const formatCountdown = (seconds) => {
-        const mins = Math.floor(seconds / 60);
-        const secs = seconds % 60;
-        return `${mins}:${secs.toString().padStart(2, '0')}`;
-      };
-
-      const formatLastUpdated = () => {
-        if (!lastUpdated) return 'Never';
-        const now = new Date();
-        const diffMs = now - lastUpdated;
-        const diffMins = Math.floor(diffMs / 60000);
-        
-        if (diffMins < 1) return 'Just now';
-        if (diffMins === 1) return '1 min ago';
-        if (diffMins < 60) return `${diffMins} mins ago`;
-        
-        const hours = Math.floor(diffMins / 60);
-        if (hours === 1) return '1 hour ago';
-        return `${hours} hours ago`;
-      };
-
-      const ChartComponent = React.memo(function ChartComponent({ chartData, metricKey }) {
-        const canvasRef = useRef(null);
-        const chartRef = useRef(null);
-
-        useEffect(() => {
-          if (!canvasRef.current || !chartData || chartData.length === 0) return;
-
-          // Destroy existing chart if it exists
-          if (chartRef.current) {
-            chartRef.current.destroy();
-          }
-
-          const ctx = canvasRef.current.getContext('2d');
-          
-          chartRef.current = new Chart(ctx, {
-            type: 'bar',
-            data: {
-              labels: chartData.map(d => d.week),
-              datasets: [{
-                data: chartData.map(d => d.value),
-                backgroundColor: chartData.map((d, i) => 
-                  i === chartData.length - 1 ? '#3b82f6' : '#94a3b8'
-                ),
-                borderRadius: 4,
-                borderSkipped: false,
-              }]
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              animation: false,
-              plugins: {
-                legend: { display: false },
-                tooltip: {
-                  callbacks: {
-                    label: function(context) {
-                      const val = context.parsed.y;
-                      if (metricKey.includes('sales') || metricKey.includes('ars')) {
-                        return `${(val / 1000).toFixed(0)}k`;
-                      }
-                      if (metricKey.includes('pacing')) {
-                        return `${val}%`;
-                      }
-                      return val.toLocaleString();
-                    }
-                  }
-                }
-              },
-              scales: {
-                y: {
-                  beginAtZero: true,
-                  ticks: { 
-                    font: { size: 11 },
-                    color: '#64748b'
-                  },
-                  grid: {
-                    color: '#e2e8f0',
-                    drawBorder: false
-                  }
-                },
-                x: {
-                  ticks: { 
-                    font: { size: 11 },
-                    color: '#64748b'
-                  },
-                  grid: { display: false }
-                }
-              }
-            }
-          });
-
-          // Cleanup on unmount or when dependencies change
-          return () => {
-            if (chartRef.current) {
-              chartRef.current.destroy();
-              chartRef.current = null;
-            }
-          };
-        }, [chartData, metricKey]);
-
-        return e('div', { style: { height: '120px', width: '100%' } },
-          e('canvas', { ref: canvasRef })
-        );
-      }, (prevProps, nextProps) => {
-        // Custom comparison: only re-render if data actually changed
-        return JSON.stringify(prevProps.chartData) === JSON.stringify(nextProps.chartData) &&
-               prevProps.metricKey === nextProps.metricKey;
-      });
-
-      if (!data) {
-        return e('div', { className: 'min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-6 flex items-center justify-center' },
-          e('div', { className: 'text-center' },
-            e('div', { className: 'animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4' }),
-            e('p', { className: 'text-slate-600' }, 'Loading dashboard...')
-          )
-        );
-      }
-
-      const filteredMetrics = filterMetrics();
-
-      return e('div', { className: 'min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-6' },
-        e('div', { className: 'max-w-7xl mx-auto' },
-          e('div', { className: 'mb-8' },
-            e('div', { className: 'flex items-center justify-between mb-4' },
-              e('div', null,
-                e('h1', { className: 'text-4xl font-bold text-slate-900 mb-2' }, 'Stacker Health Scorecard'),
-                e('p', { className: 'text-slate-600' }, 'Week Ending: ' + data.weekEnding)
-              ),
-              e('div', { className: 'flex gap-2 items-center' },
-                e('div', { className: 'flex items-center gap-2 px-3 py-2 bg-white rounded-lg border border-slate-200' },
-                  e('button', {
-                    onClick: () => setAutoRefresh(!autoRefresh),
-                    className: `text-sm font-medium ${autoRefresh ? 'text-green-600' : 'text-slate-400'}`
-                  }, autoRefresh ? '● Auto-refresh' : '○ Manual'),
-                  e('span', { className: 'text-xs text-slate-500' }, 
-                    lastUpdated ? `Updated ${formatLastUpdated()}` : 'Loading...'
-                  )
-                ),
-                e('button', {
-                  onClick: loadFromSheets,
-                  disabled: loading,
-                  className: 'flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50'
-                },
-                  e('span', { className: loading ? 'animate-spin' : '' }, '↻'),
-                  'Refresh'
-                )
-              )
-            ),
-            error && e('div', { className: 'mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2' },
-              e('span', { className: 'text-red-600' }, '⚠'),
-              e('div', { className: 'text-sm text-red-800' }, error)
-            ),
-            e('div', { className: 'flex gap-2 mb-4' },
-              ['overview', 'product', 'sales', 'finance'].map(mode =>
-                e('button', {
-                  key: mode,
-                  onClick: () => setViewMode(mode),
-                  className: `px-4 py-2 rounded-lg font-medium transition-colors ${
-                    viewMode === mode ? 'bg-blue-600 text-white' : 'bg-white text-slate-700 hover:bg-slate-100'
-                  }`
-                }, mode.charAt(0).toUpperCase() + mode.slice(1))
-              )
-            ),
-            e('div', { className: 'flex gap-2 items-center' },
-              e('span', { className: 'text-sm font-medium text-slate-600 mr-2' }, 'Time Period:'),
-              [
-                { key: 'current', label: 'Current Week' },
-                { key: 'fourWeek', label: '4-Week Avg' },
-                { key: 'thirteenWeek', label: '13-Week Avg' }
-              ].map(range =>
-                e('button', {
-                  key: range.key,
-                  onClick: () => setTimeRange(range.key),
-                  className: `px-4 py-2 text-sm rounded-lg font-medium transition-colors ${
-                    timeRange === range.key ? 'bg-slate-700 text-white' : 'bg-white text-slate-600 hover:bg-slate-100'
-                  }`
-                }, range.label)
-              )
-            )
-          ),
-          e('div', { className: 'mb-4' },
-            e('h2', { className: 'text-xl font-semibold text-slate-700' }, 'Viewing: ' + getTimeRangeLabel())
-          ),
-          e('div', { className: 'grid grid-cols-1 lg:grid-cols-2 gap-6' },
-            Object.entries(filteredMetrics).map(([key, metricData]) => {
-              const metric = metricData[timeRange];
-              if (!metric) return null;
-              
-              const showChart = timeRange === 'fourWeek' || timeRange === 'thirteenWeek';
-              const chartData = timeRange === 'fourWeek' ? metricData.historicalFourWeek : metricData.historicalThirteenWeek;
-              
-              return e('div', { key: key, className: 'bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow p-6 border border-slate-200' },
-                e('div', { className: 'flex justify-between items-start mb-4' },
-                  e('h3', { className: 'text-sm font-medium text-slate-600' }, getMetricLabel(key)),
-                  e('div', { className: `flex items-center gap-1 ${getTrendColor(key, metric.change)}` },
-                    e('span', { className: 'text-lg' }, getTrendIcon(metric.change)),
-                    e('span', { className: 'text-sm font-medium' },
-                      (metric.change > 0 ? '+' : '') + metric.change.toFixed(1) + '%'
-                    )
-                  )
-                ),
-                e('div', { className: 'mb-2' },
-                  e('div', { className: 'text-3xl font-bold text-slate-900' }, formatValue(key, metric.value))
-                ),
-                e('div', { className: 'text-sm text-slate-500 mb-4' }, 'Previous: ' + formatValue(key, metric.previous)),
-                showChart && chartData && chartData.length > 0 && e('div', { className: 'mt-4 pt-4 border-t border-slate-200' },
-                  e('h4', { className: 'text-xs font-medium text-slate-500 uppercase tracking-wide mb-3' }, 'Historical Trend'),
-                  e(ChartComponent, { 
-                    key: `${key}-${timeRange}`,
-                    chartData: chartData, 
-                    metricKey: key 
-                  })
-                )
-              );
-            })
-          )
-        )
-      );
+    let ds;
+    if(stacked&&stackData){
+      ds=[
+        {label:'Q2 Quota',data:stackData.map(s=>s.q2),backgroundColor:'rgba(16,185,129,0.55)',borderColor:'#10b981',borderWidth:1,barPercentage:0.6,categoryPercentage:0.8,borderRadius:0,stack:'s'},
+        {label:'Q3 Quota',data:stackData.map(s=>s.q3),backgroundColor:'rgba(245,158,11,0.55)',borderColor:'#f59e0b',borderWidth:1,barPercentage:0.6,categoryPercentage:0.8,borderRadius:0,stack:'s'},
+        {label:'Unallocated',data:stackData.map(s=>s.un),backgroundColor:'rgba(148,163,184,0.3)',borderColor:'#cbd5e1',borderWidth:1,barPercentage:0.6,categoryPercentage:0.8,borderRadius:{topLeft:3,topRight:3},stack:'s'}
+      ];
+    }else if(salesStacked&&salesStackData){
+      ds=[
+        {label:'Regular',data:salesStackData.map(s=>s.reg),backgroundColor:'rgba(16,185,129,0.55)',borderColor:'#10b981',borderWidth:1,barPercentage:0.6,categoryPercentage:0.8,borderRadius:0,stack:'s'},
+        {label:'Paid Pilot',data:salesStackData.map(s=>s.pilot),backgroundColor:'rgba(245,158,11,0.55)',borderColor:'#f59e0b',borderWidth:1,barPercentage:0.6,categoryPercentage:0.8,borderRadius:0,stack:'s'},
+        {label:'Conversion',data:salesStackData.map(s=>s.conv),backgroundColor:'rgba(139,92,246,0.55)',borderColor:'#8b5cf6',borderWidth:1,barPercentage:0.6,categoryPercentage:0.8,borderRadius:{topLeft:3,topRight:3},stack:'s'}
+      ];
+    }else{
+      const bgC=cw.map(w=>w===selectedWeek?'rgba(124,58,237,0.55)':w===lastBar?'rgba(124,58,237,0.35)':'rgba(124,58,237,0.22)');
+      const brC=cw.map(w=>w===selectedWeek?'#5b21b6':w===lastBar?'#6d28d9':'#7c3aed');
+      const brW=cw.map(w=>w===selectedWeek?2.5:w===lastBar?1.5:1);
+      ds=[{label:dn(metric),data:vals,backgroundColor:bgC,borderColor:brC,borderWidth:brW,barPercentage:0.6,categoryPercentage:0.8,borderRadius:3}];
     }
+    if(hasT)ds.push({label:'Weekly Target',data:tgts,borderColor:'#f59e0b',backgroundColor:'transparent',borderWidth:2,borderDash:[6,4],pointRadius:0,spanGaps:true,type:'line',stepped:true});
+    const plugins=[blP];if(mbP)plugins.push(mbP);
+    chRef.current=new Chart(ctx,{type:'bar',data:{labels:cw.map(w=>`W${w}`),datasets:ds},plugins,
+      options:{responsive:true,maintainAspectRatio:false,animation:false,
+        onClick:clickable?(evt,els)=>{if(els.length>0&&onBarClick)onBarClick(cw[els[0].index])}:undefined,
+        onHover:clickable?(evt,els)=>{ref.current.style.cursor=els.length>0?'pointer':'default'}:undefined,
+        plugins:{legend:{display:anyStacked||hasT,position:'top',labels:{font:{size:11,weight:'600'},color:'#475569',usePointStyle:true,padding:12,boxWidth:12,filter:i=>!anyStacked?i.text!==dn(metric):true}},tooltip:{backgroundColor:'#1e293b',padding:12,titleFont:{size:13,weight:'600'},bodyFont:{size:12},callbacks:{title:ctx=>{const w=cw[ctx[0].dataIndex];const wd=weekDates.find(d=>d.week===w);return`W${w}  ·  ${wd?wl(wd):''}`},label:ctx=>`${ctx.dataset.label}: ${fv(ctx.parsed.y,du)}`}}},
+        scales:{y:{beginAtZero:true,suggestedMax:sugMax,stacked:anyStacked,ticks:{font:{size:11},color:'#64748b'},grid:{color:'#e2e8f0',drawBorder:false}},x:{stacked:anyStacked,ticks:{font:{size:10},color:'#64748b',callback:(v,i)=>{const w=cw[i];const wd=weekDates.find(d=>d.week===w);const isThisWk=w===currentWeek+1;const isLastWk=w===currentWeek;if(isThisWk)return wd?[`W${w} ◂ this week`,fd(wd.start)]:[`W${w} ◂ this week`];if(isLastWk&&i===cw.length-1)return wd?[`W${w} ◂ last week`,fd(wd.start)]:[`W${w} ◂ last week`];return wd?[`W${w}`,fd(wd.start)]:`W${w}`}},grid:{display:false}}}}
+    });
+    return()=>{if(chRef.current){chRef.current.destroy();chRef.current=null}};
+  },[metric,cw,weekDates,timeRange,monthWeeks,du,selectedWeek,onBarClick,clickable,stacked,stackData,salesStacked,salesStackData,anyStacked]);
+  return e('div',{style:{height:'100%',width:'100%',minHeight:'300px'}},e('canvas',{ref}));
+},(p,n)=>JSON.stringify(p.metric.values)===JSON.stringify(n.metric.values)&&p.currentWeek===n.currentWeek&&p.timeRange===n.timeRange&&p.selectedWeek===n.selectedWeek&&p.maxWeek===n.maxWeek&&p.renewalDeals===n.renewalDeals&&p.salesDeals===n.salesDeals);
 
-    ReactDOM.render(React.createElement(StackerDashboard), document.getElementById('root'));
-  </script>
-</body>
-</html>
+function DealCard({deal:d,onClick}){
+  const inQ2=d.quotaStatus&&d.quotaStatus.toLowerCase().includes('q2');
+  const inQ3=d.quotaStatus&&d.quotaStatus.toLowerCase().includes('q3');
+  const isAC=parseVal(d.prevTerm)>=12;
+  const isUpg=parseVal(d.mrrUpgrade)!==0||parseVal(d.tcvUpgrade)!==0;
+  const accent=inQ2?'bg-emerald-400':inQ3?'bg-amber-400':'bg-slate-300';
+  const bg=inQ2?'bg-emerald-50/50 border-emerald-200':inQ3?'bg-amber-50/50 border-amber-200':'bg-white border-slate-200';
+  return e('div',{className:`rounded-lg p-4 border shadow-sm hover:shadow-md transition-shadow flex gap-0 overflow-hidden ${bg} ${onClick?'cursor-pointer':''}`,'onClick':onClick?()=>onClick(d.customer):undefined},
+    e('div',{className:`w-1 shrink-0 rounded-full -ml-1 mr-3 ${accent}`}),
+    e('div',{className:'flex-1 min-w-0'},
+      e('div',{className:'flex items-start justify-between mb-3'},
+        e('div',{className:'flex items-center gap-2 flex-wrap'},e('span',{className:'font-bold text-sm text-slate-900'},d.customer),isAC&&e('span',{className:'text-[9px] font-bold text-purple-600 bg-purple-100 px-2 py-0.5 rounded-full'},'Annual Cohort'),isUpg&&e('span',{className:'text-[9px] font-bold text-blue-600 bg-blue-100 px-2 py-0.5 rounded-full'},'Upgrade')),
+        e('div',{className:'text-right shrink-0 ml-2'},
+          d.quotaTcv&&e('div',{className:'flex items-center gap-1 justify-end'},e('span',{className:'text-sm font-bold text-emerald-600 mono'},d.quotaTcv),inQ2&&inQ3&&e('span',{className:'text-[8px] text-emerald-400'},'Q2')),
+          d.quotaTcvQ3&&inQ3&&e('div',{className:'flex items-center gap-1 justify-end'},e('span',{className:`${d.quotaTcv?'text-xs':'text-sm font-bold'} text-amber-600 mono`},d.quotaTcvQ3),inQ2&&inQ3&&e('span',{className:'text-[8px] text-amber-400'},'Q3')),
+          e('div',{className:`${(d.quotaTcv||d.quotaTcvQ3)?'text-xs text-slate-400':'text-sm font-bold text-violet-700'} mono`},d.tcv))),
+      e('div',{className:'grid grid-cols-2 gap-x-4 gap-y-2 text-xs'},
+        e('div',null,e('span',{className:'text-slate-400'},'Type: '),e('span',{className:'font-semibold text-slate-700'},d.dealType||'—')),
+        e('div',null,e('span',{className:'text-slate-400'},'MRR: '),e('span',{className:'font-semibold text-slate-700 mono'},d.mrr||'—')),
+        e('div',null,e('span',{className:'text-slate-400'},'Term: '),e('span',{className:'font-semibold text-slate-700'},d.term?`${d.term} mo`:'—')),
+        e('div',null,e('span',{className:'text-slate-400'},'Close: '),e('span',{className:'font-semibold text-slate-700'},d.closeDate||'—')),
+        e('div',null,e('span',{className:'text-slate-400'},'Effective: '),e('span',{className:'font-semibold text-slate-700'},d.contractEffectiveDate||'—')),
+        e('div',{className:'col-span-2'},e('span',{className:'text-slate-400'},'Quota: '),inQ2&&inQ3?e('span',{className:'inline-flex items-center gap-1 font-semibold text-violet-600'},e('span',{className:'w-1.5 h-1.5 rounded-full bg-violet-500 inline-block'}),'In Q2 & Q3 Quota'):inQ2?e('span',{className:'inline-flex items-center gap-1 font-semibold text-emerald-600'},e('span',{className:'w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block'}),'In Q2 Quota'):inQ3?e('span',{className:'inline-flex items-center gap-1 font-semibold text-amber-600'},e('span',{className:'w-1.5 h-1.5 rounded-full bg-amber-500 inline-block'}),'In Q3 Quota'):e('span',{className:'font-semibold text-slate-400'},'Not in any quota'))),
+      (inQ2||inQ3)&&(d.quotaTcv||d.quotaTcvQ3)&&e('div',{className:'mt-3 flex gap-2'},
+        inQ2&&d.quotaTcv&&e('div',{className:'flex-1 bg-emerald-50 rounded-md px-2 py-1.5 border border-emerald-200 text-center'},e('div',{className:'text-[9px] font-bold text-emerald-500 uppercase'},'Q2 Quota TCV'),e('div',{className:'text-sm font-bold text-emerald-700 mono mt-0.5'},d.quotaTcv)),
+        inQ3&&d.quotaTcvQ3&&e('div',{className:'flex-1 bg-amber-50 rounded-md px-2 py-1.5 border border-amber-200 text-center'},e('div',{className:'text-[9px] font-bold text-amber-500 uppercase'},'Q3 Quota TCV'),e('div',{className:'text-sm font-bold text-amber-700 mono mt-0.5'},d.quotaTcvQ3))),
+      d.additionalNotes&&e('div',{className:'mt-3 text-xs text-slate-500 italic bg-white/60 rounded-md px-3 py-2 border border-slate-100'},d.additionalNotes)))
+}
+
+function parseVal(s){if(!s)return 0;const c=String(s).replace(/[$,%,]/g,'').trim();const n=parseFloat(c);return isNaN(n)?0:n}
+function sumField(deals,field){return deals.reduce((s,d)=>s+parseVal(d[field]),0)}
+
+function SlideDrawer({open,onClose,title,subtitle,deals,view,quotaKey,q2AnnualCohortTarget,q3AnnualCohortTarget,q2RenewalTarget,q3RenewalTarget,renewalTargets,highlightDeal,onDealClickThrough,renewalComputed}){
+  const[tableFilter,setTableFilter]=useState('quota');
+  const[activeQ,setActiveQ]=useState(quotaKey||'q3');
+  const hlRef=useRef(null);
+  useEffect(()=>{if(open){setTableFilter('quota');setActiveQ(quotaKey||'q3')}},[open,quotaKey]);
+  // Auto-scroll to highlighted deal
+  useEffect(()=>{if(highlightDeal&&hlRef.current){const row=hlRef.current.querySelector(`[data-deal="${highlightDeal}"]`);if(row)row.scrollIntoView({behavior:'smooth',block:'center'})}},[highlightDeal]);
+  if(!open)return null;
+  const isTable=view==='table';
+  const qk=activeQ;
+  const qLabel=qk.toUpperCase();
+  const quotaMatch=qk; // matches the "In Q2/Q3/Q4 quota" tag in column J
+  // RenewalDetail has dedicated quota-TCV columns for Q2 (P) and Q3 (Q) only. There is no Q4
+  // column yet, so the Q4 view falls back to each deal's full renewed TCV.
+  const quotaField=qk==='q3'?'quotaTcvQ3':qk==='q2'?'quotaTcv':'quotaTcvQ4';
+  const hasQuotaColumn=qk==='q2'||qk==='q3';
+  const allDeals=deals||[];
+  // Annual Cohort is tracked for Q2 only.
+  const showCohort=qk==='q2';
+  const effFilter=(tableFilter==='cohort'&&!showCohort)?'quota':tableFilter;
+  const quotaDeals=allDeals.filter(d=>inQuotaLoose(d,quotaMatch));
+  const upgradeDeals=quotaDeals.filter(d=>parseVal(d.mrrUpgrade)!==0||parseVal(d.tcvUpgrade)!==0);
+  // Exact-tag match, mirroring the sheet's annual-cohort formula (excludes split-quarter deals)
+  const annualCohortDeals=showCohort?allDeals.filter(d=>inQuotaExact(d,quotaMatch)&&parseVal(d.prevTerm)>=12):[];
+  const shownDeals=isTable?(effFilter==='quota'?quotaDeals:effFilter==='upgrades'?upgradeDeals:effFilter==='cohort'?annualCohortDeals:allDeals):allDeals;
+  const shownTCV=tcvTotal(shownDeals);
+  const quotaTCV=quotaTcvTotal(quotaDeals,quotaField);
+  const totalMrrUpgrade=sumField(quotaDeals,'mrrUpgrade');
+  const cohortTCV=quotaTcvTotal(annualCohortDeals,quotaField);
+  const rt=renewalTargets||{};
+  const pick=(q3v,q2v,q4v)=>qk==='q3'?q3v:qk==='q2'?q2v:q4v;
+  const qrtTarget=pick(rt.q3QrtTarget||q3RenewalTarget, rt.q2QrtTarget||q2RenewalTarget, rt.q4QrtTarget||null);
+  // Progress comes from the sheet's own cells (RenewalDetail column T): T5 for Q2, T11 for Q3,
+  // T18 for Q4. The deal-derived total is computed alongside as a cross-check.
+  const rcq=(renewalComputed||{})[qk]||null;
+  const sheetQrt=pick(rt.q3QrtProgress,rt.q2QrtProgress,rt.q4QrtProgress);
+  const qrtActual=sheetQrt!=null?sheetQrt:(rcq?rcq.qrt:quotaTCV);
+  const qrtSheetRef=rcq?(sheetDelta(rcq.qrt,qrtActual)!=null?rcq.qrt:null):null;
+  const qrtPct=qrtTarget?Math.round((qrtActual/qrtTarget)*100):0;
+  const cohortTarget=showCohort?(rt.q2AnnualTarget||q2AnnualCohortTarget):null;
+  const cohortActual=showCohort?(rt.q2AnnualProgress!=null?rt.q2AnnualProgress:(rcq?rcq.annual:cohortTCV)):null;
+  const cohortSheetRef=showCohort&&rcq?(sheetDelta(rcq.annual,cohortActual)!=null?rcq.annual:null):null;
+  const cohortPct=cohortTarget?Math.round((cohortActual/cohortTarget)*100):0;
+  const isUpgradeView=effFilter==='upgrades';
+  const isCohortView=effFilter==='cohort';
+
+  const stdHeaders=['Customer','Type','Quota TCV','Prev TCV','Prev MRR','Prev Term','Renewed TCV','Renewed MRR','Renewed Term','Close Date','Effective','Notes'];
+  const upgHeaders=['Customer','Prev MRR','Prev Term','Renewed MRR','Renewed Term','TCV \u0394','MRR \u0394','Notes'];
+  const cohortHeaders=['Customer','Type','Prev Term','Renewed TCV','Renewed MRR','Renewed Term','Close Date','Notes'];
+  const headers=isUpgradeView?upgHeaders:isCohortView?cohortHeaders:stdHeaders;
+
+  return e('div',{className:'fixed inset-0 z-[100] flex justify-end'},
+    e('div',{onClick:onClose,className:'absolute inset-0 bg-black/20 backdrop-blur-[2px] anim-fade'}),
+    e('div',{className:`relative w-full h-full bg-white shadow-2xl border-l border-slate-200 flex flex-col anim-drawer ${isTable?'max-w-5xl':'max-w-md'}`},
+      e('div',{className:'shrink-0 p-5 border-b border-slate-200 bg-gradient-to-r from-slate-50 to-white'},
+        e('div',{className:'flex items-center justify-between mb-4'},
+          e('div',{className:'flex items-center gap-3'},
+            e('div',null,e('h3',{className:'text-xl font-bold text-slate-900'},isTable?`${qLabel} Renewal Deals`:(title||'Deals')),subtitle&&!isTable&&e('p',{className:'text-xs text-slate-400 mt-0.5'},subtitle)),
+            isTable&&e('div',{className:'flex items-center bg-slate-100 rounded-lg p-0.5'},
+              ['q2','q3','q4'].map(q=>e('button',{key:q,onClick:()=>{setActiveQ(q);setTableFilter('quota')},
+                className:`px-3 py-1.5 rounded-md text-xs font-bold transition-all ${activeQ===q?'bg-white text-slate-900 shadow-sm':'text-slate-400 hover:text-slate-600'}`},q.toUpperCase())))),
+          e('button',{onClick:onClose,className:'w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-200 text-slate-400 hover:text-slate-700 transition-colors text-lg font-bold'},'\u2715')),
+        isTable&&e('div',{className:'flex gap-3 flex-wrap'},
+          e('div',{className:'flex-1 min-w-[120px] bg-white rounded-lg p-3 border border-slate-200 shadow-sm text-center'},
+            e('div',{className:'text-[10px] font-bold text-slate-400 uppercase tracking-widest'},'Deals'),
+            e('div',{className:'flex items-baseline justify-center gap-2 mt-1'},
+              e('span',{className:'text-2xl font-bold text-slate-900 mono'},String(allDeals.length)),
+              e('span',{className:'text-xs text-slate-300'},'|'),
+              e('span',{className:'text-lg font-bold text-emerald-600 mono'},String(quotaDeals.length)),
+              e('span',{className:'text-[9px] font-semibold text-emerald-500'},`in ${qLabel}`))),
+          e('div',{className:'flex-1 min-w-[140px] rounded-lg p-3 border shadow-sm text-center bg-gradient-to-br from-emerald-50 to-green-50 border-emerald-200'},
+            e('div',{className:'text-[10px] font-bold uppercase tracking-widest text-emerald-500'},`${qLabel} QRT Progress`),
+            e('div',{className:'flex items-baseline justify-center gap-1.5 mt-1'},
+              e('span',{className:'text-xl font-bold mono text-emerald-700'},`$${(qrtActual/1000).toFixed(2)}k`),
+              qrtTarget&&e('span',{className:'text-xs text-emerald-400'},`/ $${(qrtTarget/1000).toFixed(2)}k`)),
+            qrtTarget&&e('div',{className:'mt-2'},
+              e('div',{className:'w-full h-2 bg-emerald-100 rounded-full overflow-hidden'},
+                e('div',{className:'h-full rounded-full transition-all',style:{width:`${Math.min(qrtPct,100)}%`,backgroundColor:qrtPct>=100?'#22c55e':'#10b981'}})),
+              e('div',{className:`text-[10px] font-bold mt-1 ${qrtPct>=100?'text-green-600':'text-emerald-500'}`},`${qrtPct}%`)),
+            qrtSheetRef!=null&&e('div',{className:'text-[9px] text-amber-600 font-semibold mt-1',title:'Summing the quota-tagged deal rows directly gives a different figure than the sheet cell \u2014 check that cell\u2019s range and quarter'},`\u26a0 deals total: $${(qrtSheetRef/1000).toFixed(2)}k`)),
+          e('div',{className:'flex-1 min-w-[100px] bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-3 border border-blue-200 shadow-sm text-center'},
+            e('div',{className:'text-[10px] font-bold text-blue-500 uppercase tracking-widest'},`${qLabel} MRR Upgrades`),
+            e('div',{className:'text-2xl font-bold text-blue-700 mono mt-1'},totalMrrUpgrade?`$${(totalMrrUpgrade/1000).toFixed(2)}k`:'$0'),
+            e('div',{className:'text-xs font-semibold text-blue-400 mt-0.5'},`${upgradeDeals.length} deals`)),
+          showCohort&&e('div',{className:'flex-1 min-w-[130px] bg-gradient-to-br from-purple-50 to-fuchsia-50 rounded-lg p-3 border border-purple-200 shadow-sm text-center'},
+            e('div',{className:'text-[10px] font-bold text-purple-500 uppercase tracking-widest'},`${qLabel} Annual Cohort`),
+            e('div',{className:'flex items-baseline justify-center gap-1.5 mt-1'},
+              e('span',{className:'text-lg font-bold text-purple-700 mono'},cohortActual?`$${(cohortActual/1000).toFixed(2)}k`:'$0'),
+              cohortTarget&&e('span',{className:'text-xs text-purple-400'},`/ $${(cohortTarget/1000).toFixed(2)}k`)),
+            cohortTarget&&e('div',{className:'mt-2'},
+              e('div',{className:'w-full h-2 bg-purple-100 rounded-full overflow-hidden'},
+                e('div',{className:'h-full rounded-full transition-all',style:{width:`${Math.min(cohortPct,100)}%`,backgroundColor:cohortPct>=100?'#22c55e':'#a855f7'}})),
+              e('div',{className:`text-[10px] font-bold mt-1 ${cohortPct>=100?'text-green-600':'text-purple-500'}`},`${cohortPct}%`)),
+            e('div',{className:'text-xs font-semibold text-purple-400 mt-0.5'},`${annualCohortDeals.length} deals`),
+            cohortSheetRef!=null&&e('div',{className:'text-[9px] text-amber-600 font-semibold mt-0.5',title:'Summing the cohort deal rows directly gives a different figure than the sheet cell \u2014 check that cell\u2019s range'},`\u26a0 deals total: $${(cohortSheetRef/1000).toFixed(2)}k`))),
+        isTable&&e('div',{className:'flex items-center gap-1 mt-4 bg-slate-100 rounded-lg p-1'},
+          [{k:'quota',l:`${qLabel} Quota`,c:quotaDeals.length,ac:'bg-emerald-100 text-emerald-700'},
+           {k:'all',l:'All Deals',c:allDeals.length,ac:'bg-slate-200 text-slate-600'},
+           {k:'upgrades',l:'Upgrades',c:upgradeDeals.length,ac:'bg-blue-100 text-blue-700'},
+           ...(showCohort?[{k:'cohort',l:'Annual Cohort',c:annualCohortDeals.length,ac:'bg-purple-100 text-purple-700'}]:[])].map(t=>
+            e('button',{key:t.k,onClick:()=>setTableFilter(t.k),
+              className:`flex-1 px-3 py-2 rounded-md text-xs font-bold transition-all ${effFilter===t.k?'bg-white text-slate-900 shadow-sm':'text-slate-500 hover:text-slate-700'}`},
+              t.l,' ',e('span',{className:`ml-1 text-[10px] font-bold px-1.5 py-0.5 rounded-full ${tableFilter===t.k?t.ac:'bg-slate-200/60 text-slate-400'}`},t.c))))),
+      isTable
+        ?e('div',{ref:hlRef,className:'flex-1 overflow-auto'},
+          shownDeals.length>0
+            ?e('table',{className:'w-full text-sm'},
+              e('thead',null,e('tr',{className:`sticky top-0 z-10 ${isUpgradeView?'bg-blue-50':isCohortView?'bg-purple-50':'bg-slate-50'}`},
+                headers.map((h,hi)=>
+                  e('th',{key:h,className:`text-left text-[10px] font-bold uppercase tracking-wider px-4 py-3 border-b whitespace-nowrap ${isUpgradeView?'text-blue-600 border-blue-200':isCohortView?'text-purple-600 border-purple-200':'text-slate-500 border-slate-200'} ${(isUpgradeView&&(h==='Renewed MRR'||h==='TCV \u0394'))||((!isUpgradeView&&!isCohortView)&&h==='Renewed TCV')||(isCohortView&&h==='Renewed TCV')?'border-l-2 border-l-violet-300':''} ${h==='Quota TCV'?'!text-emerald-600 !bg-emerald-50/50':''}`},h)))),
+              e('tbody',null,shownDeals.map((d,i)=>{
+                const inQ2=d.quotaStatus&&d.quotaStatus.toLowerCase().includes('q2');
+                const inQ3=d.quotaStatus&&d.quotaStatus.toLowerCase().includes('q3');
+                const inQ4=d.quotaStatus&&d.quotaStatus.toLowerCase().includes('q4');
+                const rowBg=inQ2?'bg-emerald-50/60 hover:bg-emerald-50':inQ3?'bg-amber-50/60 hover:bg-amber-50':inQ4?'bg-sky-50/60 hover:bg-sky-50':'bg-white hover:bg-slate-50';
+                const isAC=parseVal(d.prevTerm)>=12;
+                const isUpg=parseVal(d.mrrUpgrade)!==0||parseVal(d.tcvUpgrade)!==0;
+                const isHL=highlightDeal&&d.customer===highlightDeal;
+                return isUpgradeView
+                  ?e('tr',{key:i,'data-deal':d.customer,className:`border-b border-blue-100 transition-colors bg-blue-50/40 hover:bg-blue-50 ${isHL?'row-highlight':''}`},
+                    e('td',{className:'px-4 py-3.5 whitespace-nowrap'},e('div',{className:'flex items-center gap-1.5'},e('span',{className:'font-semibold text-slate-900'},d.customer),isAC&&e('span',{className:'text-[8px] font-bold text-purple-600 bg-purple-100 px-1.5 py-0.5 rounded-full leading-none'},'AC'))),
+                    e('td',{className:'px-4 py-3.5 text-slate-400 mono whitespace-nowrap'},d.prevMrr||'\u2014'),
+                    e('td',{className:'px-4 py-3.5 text-slate-400 whitespace-nowrap'},d.prevTerm?`${d.prevTerm} mo`:'\u2014'),
+                    e('td',{className:'px-4 py-3.5 font-semibold text-slate-700 mono whitespace-nowrap border-l-2 border-l-violet-300'},d.mrr||'\u2014'),
+                    e('td',{className:'px-4 py-3.5 text-slate-600 whitespace-nowrap'},d.term?`${d.term} mo`:'\u2014'),
+                    e('td',{className:'px-4 py-3.5 whitespace-nowrap border-l-2 border-l-violet-300'},parseVal(d.tcvUpgrade)!==0?e('div',{className:'ttip inline-flex'},e('span',{className:`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-sm font-bold mono cursor-pointer ${parseVal(d.tcvUpgrade)>0?'bg-blue-100 text-blue-700':'bg-red-100 text-red-700'}`},parseVal(d.tcvUpgrade)>0?'\u25b2':'\u25bc',' ',d.tcvUpgrade),e('div',{className:'tt'},(d.prevTcv||'\u2014')+' \u2192 '+(d.tcv||'\u2014'))):e('span',{className:'text-slate-300'},'\u2014')),
+                    e('td',{className:'px-4 py-3.5 whitespace-nowrap'},parseVal(d.mrrUpgrade)!==0?e('div',{className:'ttip inline-flex'},e('span',{className:`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-sm font-bold mono cursor-pointer ${parseVal(d.mrrUpgrade)>0?'bg-blue-100 text-blue-700':'bg-red-100 text-red-700'}`},parseVal(d.mrrUpgrade)>0?'\u25b2':'\u25bc',' ',d.mrrUpgrade),e('div',{className:'tt'},(d.prevMrr||'\u2014')+' \u2192 '+(d.mrr||'\u2014'))):e('span',{className:'text-slate-300'},'\u2014')),
+                    e('td',{className:'px-4 py-3.5 text-xs text-slate-500 max-w-[200px]'},d.additionalNotes||'\u2014'))
+                  :isCohortView
+                  ?e('tr',{key:i,'data-deal':d.customer,className:`border-b border-purple-100 transition-colors bg-purple-50/30 hover:bg-purple-50 ${isHL?'row-highlight':''}`},
+                    e('td',{className:'px-4 py-3 whitespace-nowrap'},e('div',{className:'flex items-center gap-1.5'},e('span',{className:'font-semibold text-slate-900'},d.customer),e('span',{className:'text-[8px] font-bold text-purple-600 bg-purple-100 px-1.5 py-0.5 rounded-full leading-none'},'AC'),isUpg&&e('span',{className:'text-[8px] font-bold text-blue-600 bg-blue-100 px-1.5 py-0.5 rounded-full leading-none'},'UPG'))),
+                    e('td',{className:'px-4 py-3 text-slate-600'},d.dealType||'\u2014'),
+                    e('td',{className:'px-4 py-3 text-purple-600 font-semibold whitespace-nowrap'},d.prevTerm?`${d.prevTerm} mo`:'\u2014'),
+                    e('td',{className:'px-4 py-3 font-bold text-violet-700 mono whitespace-nowrap border-l-2 border-l-violet-300'},d.tcv),
+                    e('td',{className:'px-4 py-3 font-semibold text-slate-700 mono whitespace-nowrap'},d.mrr||'\u2014'),
+                    e('td',{className:'px-4 py-3 text-slate-600 whitespace-nowrap'},d.term?`${d.term} mo`:'\u2014'),
+                    e('td',{className:'px-4 py-3 text-slate-600 whitespace-nowrap'},d.closeDate||'\u2014'),
+                    e('td',{className:'px-4 py-3 text-xs text-slate-500 max-w-[220px]'},d.additionalNotes||'\u2014'))
+                  :e('tr',{key:i,'data-deal':d.customer,className:`border-b border-slate-100 transition-colors ${rowBg} ${isHL?'row-highlight':''}`},
+                    e('td',{className:'px-4 py-3 whitespace-nowrap'},e('div',{className:'flex items-center gap-1.5'},e('span',{className:'font-semibold text-slate-900'},d.customer),isAC&&e('span',{className:'text-[8px] font-bold text-purple-600 bg-purple-100 px-1.5 py-0.5 rounded-full leading-none'},'AC'),isUpg&&e('span',{className:'text-[8px] font-bold text-blue-600 bg-blue-100 px-1.5 py-0.5 rounded-full leading-none'},'UPG'))),
+                    e('td',{className:'px-4 py-3 text-slate-600'},d.dealType||'\u2014'),
+                    e('td',{className:'px-4 py-3 whitespace-nowrap'},e('span',{className:'inline-block px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-700 font-bold mono text-sm border border-emerald-200'},(hasQuotaColumn?(qk==='q3'?d.quotaTcvQ3:d.quotaTcv):d.tcv)||'\u2014')),
+                    e('td',{className:'px-4 py-3 text-slate-400 mono whitespace-nowrap'},d.prevTcv||'\u2014'),
+                    e('td',{className:'px-4 py-3 text-slate-400 mono whitespace-nowrap'},d.prevMrr||'\u2014'),
+                    e('td',{className:'px-4 py-3 text-slate-400 whitespace-nowrap'},d.prevTerm?`${d.prevTerm} mo`:'\u2014'),
+                    e('td',{className:'px-4 py-3 font-bold text-violet-700 mono whitespace-nowrap border-l-2 border-l-violet-300'},d.tcv),
+                    e('td',{className:'px-4 py-3 font-semibold text-slate-700 mono whitespace-nowrap'},d.mrr||'\u2014'),
+                    e('td',{className:'px-4 py-3 text-slate-600 whitespace-nowrap'},d.term?`${d.term} mo`:'\u2014'),
+                    e('td',{className:'px-4 py-3 text-slate-600 whitespace-nowrap'},d.closeDate||'\u2014'),
+                    e('td',{className:'px-4 py-3 text-slate-600 whitespace-nowrap'},d.contractEffectiveDate||'\u2014'),
+                    e('td',{className:'px-4 py-3 text-xs text-slate-500 max-w-[220px]'},d.additionalNotes||'\u2014'))})))
+            :e('div',{className:'flex flex-col items-center justify-center h-full text-slate-400 p-10'},
+              e('div',{className:'text-4xl mb-3'},'\ud83d\udced'),
+              e('div',{className:'text-sm font-medium'},'No deals found')))
+        :e('div',{className:'flex-1 overflow-y-auto p-5 space-y-3'},
+          allDeals.length>0
+            ?allDeals.map((d,i)=>e(DealCard,{key:i,deal:d,onClick:onDealClickThrough}))
+            :e('div',{className:'flex flex-col items-center justify-center h-full text-slate-400'},
+              e('div',{className:'text-4xl mb-3'},'\ud83d\udced'),
+              e('div',{className:'text-sm font-medium'},'No deals found')))))
+}
+
+
+const InfoPanel=memo(function InfoPanel({metric,currentWeek,weekDates,onQ2Click,onQ3Click,onQ4Click,q3RenewalTarget,renewalDeals,renewalTargets,onSalesQ2Click,salesNumbers,quarterLabel,quarter,renewalComputed}){
+  const inv=metric.isInverse,du=gdu(metric),shu=su(du);
+  const lastW=currentWeek>=1?currentWeek:null;
+  const lastVal=lastW?metric.values[lastW]:null;
+  const lastWd=lastW?weekDates.find(d=>d.week===lastW):null;
+  const lastTarget=lastW?gwt(metric,lastW):null;
+  const lastPct=pvt(lastVal,lastTarget);
+  const lastSc=lastPct!==null?sColor(lastPct,inv):null;
+  const isLatest=isLatestValueMetric(metric);
+  const q2A=getQ2Actual(metric,currentWeek);
+  const q2T=metric.q2Target,q2P=pvt(q2A,q2T);
+  const gP=q2A!==null&&q2T?(q2A/q2T)*100:0,gC=gaugeColor(gP);
+  const isAvg=metric.aggregation==='average';
+  const showWeeklyGoal=hasAnyWeeklyTarget(metric);
+  const hint=isRenTCV(metric)?'Click a bar to see deal details':null;
+  const q2Clickable=!!onQ2Click;
+  const activeQ=quarter==='q2'?'q2':'q3';
+  const hasQ3=isRenTCV(metric)&&q3RenewalTarget!=null;
+  // Slider covers Q2/Q3/Q4 and opens on the quarter currently being viewed (Q3 by default).
+  const QSLIDES=['q2','q3','q4'];
+  const[qSlide,setQSlide]=useState(activeQ);
+  useEffect(()=>{setQSlide(activeQ)},[activeQ]);
+  // Renewal quota figures come from RenewalDetail's own cells (column T): T4/T5 for Q2,
+  // T10/T11 for Q3, T17/T18 for Q4. That's a different basis than the supporting-data tab's
+  // weekly close-date values, so every slide uses the quota basis and stays comparable.
+  // The deal-derived total is computed alongside and surfaced if it disagrees.
+  const rt0=renewalTargets||{};
+  const rc=renewalComputed||{};
+  const quotaFigures={
+    q2:{target:rt0.q2QrtTarget!=null?rt0.q2QrtTarget:metric.q2Target, actual:rt0.q2QrtProgress!=null?rt0.q2QrtProgress:(rc.q2?rc.q2.qrt:null), computed:rc.q2?rc.q2.qrt:null},
+    q3:{target:q3RenewalTarget, actual:rt0.q3QrtProgress!=null?rt0.q3QrtProgress:(rc.q3?rc.q3.qrt:null), computed:rc.q3?rc.q3.qrt:null},
+    q4:{target:rt0.q4QrtTarget!=null?rt0.q4QrtTarget:null, actual:rt0.q4QrtProgress!=null?rt0.q4QrtProgress:(rc.q4?rc.q4.qrt:null), computed:rc.q4?rc.q4.qrt:null}
+  };
+  const q3T=q3RenewalTarget;
+  const q3A=hasQ3?quotaFigures.q3.actual:null;
+  const slideIdx=Math.max(0,QSLIDES.indexOf(qSlide));
+  // Clicking the gauge opens the deal drawer on the slide's quarter (only where a handler exists)
+  const slideClickHandler=qSlide==='q2'?(onQ2Click||null):qSlide==='q3'?(onQ3Click||null):(onQ4Click||null);
+
+  const gaugeQ2=()=>e('div',null,
+    e(Gauge,{progress:gP,color:gC,label:`${Math.round(gP)}%`}),
+    e('div',{className:'flex items-center justify-center gap-2 mt-1'},e('span',{className:'text-sm font-bold text-emerald-600 mono'},q2A!==null?fv(q2A,du):'—'),e('span',{className:'text-xs text-slate-400'},'/'),e('span',{className:'text-sm font-semibold text-slate-600'},`${fv(q2T,du)} ${shu}`)),
+    q2P!==null&&e('div',{className:`mt-2 inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold ${gP>=100?'bg-gradient-to-r from-green-500 to-green-600 text-white':'bg-slate-200 text-slate-600'}`},e('span',null,q2P>0?'↑':q2P<0?'↓':'→'),e('span',null,`${q2P>0?'+':''}${q2P}% vs target`)));
+
+  // New Brand MRR dual gauge — use sales-derived numbers when available
+  const isMRR=isNewBrandMRR(metric);
+  const sn=salesNumbers||null;
+  const salesTotal=sn?sn.total:null;
+  const regularARR=sn?sn.regARR:null;
+  const pilotMRR=sn?sn.pilMRR:null;
+  const mrrActual=isMRR&&salesTotal!==null?salesTotal:q2A;
+  const mrrGP=mrrActual!==null&&q2T?(mrrActual/q2T)*100:gP;
+  const organicPct=regularARR!==null&&q2T?(regularARR/q2T)*100:0;
+  const gaugeMRR=()=>e('div',null,
+    e(DualGauge,{pOrganic:organicPct,pTotal:mrrGP,label:`${Math.round(mrrGP)}%`}),
+    e('div',{className:'flex items-center justify-center gap-2 mt-1'},e('span',{className:'text-sm font-bold text-emerald-600 mono'},mrrActual!==null?fv(mrrActual,du):'—'),e('span',{className:'text-xs text-slate-400'},'/'),e('span',{className:'text-sm font-semibold text-slate-600'},`${fv(q2T,du)} ${shu}`)),
+    e('div',{className:'flex items-stretch gap-2 mt-3'},
+      e('div',{className:'flex-1 bg-emerald-50 rounded-md px-2 py-1.5 border border-emerald-200 text-center'},
+        e('div',{className:'text-[9px] font-bold text-emerald-500 uppercase tracking-wider'},'Regular ARR'),
+        e('div',{className:'text-sm font-bold text-emerald-700 mono mt-0.5'},regularARR!==null?fv(regularARR,du):'—')),
+      e('div',{className:'flex-1 bg-amber-50 rounded-md px-2 py-1.5 border border-amber-200 text-center'},
+        e('div',{className:'text-[9px] font-bold text-amber-500 uppercase tracking-wider'},'Pilot Conv.'),
+        e('div',{className:'text-sm font-bold text-amber-700 mono mt-0.5'},pilotMRR!==null?fv(pilotMRR,du):'—'))),
+    q2P!==null&&e('div',{className:`mt-2 inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold ${mrrGP>=100?'bg-gradient-to-r from-green-500 to-green-600 text-white':'bg-slate-200 text-slate-600'}`},e('span',null,mrrGP>gP?'↑':mrrGP<gP?'↓':'→'),e('span',null,`${Math.round(mrrGP)}% of target`)));
+
+  // One quota-basis gauge, rendered per quarter so Q2/Q3/Q4 slides stay identical in design.
+  const PROGRESS_CELL={q2:'T5',q3:'T11',q4:'T18'};
+  const gaugeForQuarter=(q)=>{
+    const f=quotaFigures[q]||{};
+    const target=f.target,actual=f.actual;
+    if(!target)return e('div',{className:'text-xs text-slate-400 italic py-4'},`No ${q.toUpperCase()} quota target set`);
+    const gp=(actual!=null&&target)?(actual/target)*100:0;
+    const pct=pvt(actual,target);
+    const ref=f.computed!=null?(sheetDelta(f.computed,actual)!=null?f.computed:null):null;
+    return e('div',null,
+      e(Gauge,{progress:gp,color:gaugeColor(gp),label:`${Math.round(gp)}%`}),
+      e('div',{className:'flex items-center justify-center gap-2 mt-1'},
+        e('span',{className:'text-sm font-bold text-emerald-600 mono'},actual!=null?fv(actual,du):'\u2014'),
+        e('span',{className:'text-xs text-slate-400'},'/'),
+        e('span',{className:'text-sm font-semibold text-slate-600'},`${fv(target,du)} ${shu}`)),
+      pct!==null&&e('div',{className:`mt-2 inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold ${gp>=100?'bg-gradient-to-r from-green-500 to-green-600 text-white':'bg-slate-200 text-slate-600'}`},
+        e('span',null,pct>0?'\u2191':pct<0?'\u2193':'\u2192'),e('span',null,`${pct>0?'+':''}${pct}% vs target`)),
+      ref!=null&&e('div',{className:'mt-1.5 text-[9px] text-amber-600 font-semibold',title:`Summing the ${q.toUpperCase()}-tagged deal rows directly gives a different figure than RenewalDetail!${PROGRESS_CELL[q]} \u2014 check that cell's range and quarter`},`\u26a0 deals total ${fv(ref,du)}`));
+  };
+
+  return e('div',{className:'flex flex-col gap-3 h-full'},
+    !isLatest&&e('div',{className:'bg-white rounded-lg p-4 border border-slate-200 shadow-sm text-center'},
+      e('div',{className:'text-[10px] font-bold text-slate-900 uppercase tracking-widest mb-2'},lastW?`Last Week · W${lastW}`:'Last Week'),
+      e('div',{className:'flex items-baseline justify-center gap-1.5'},e('span',{className:'text-3xl font-bold text-slate-900 mono'},lastVal!==null?fv(lastVal,du):'—'),shu&&lastVal!==null&&e('span',{className:'text-sm font-semibold text-slate-400'},shu)),
+      lastWd&&e('div',{className:'text-[10px] text-slate-400 mt-1'},wl(lastWd))),
+    isLatest&&e('div',{className:'bg-white rounded-lg p-4 border border-slate-200 shadow-sm text-center'},
+      e('div',{className:'text-[10px] font-bold text-slate-900 uppercase tracking-widest mb-2'},'Most Recent · W'+currentWeek),
+      e('div',{className:'flex items-baseline justify-center gap-1.5'},e('span',{className:'text-3xl font-bold text-slate-900 mono'},q2A!==null?fv(q2A,du):'—'),shu&&q2A!==null&&e('span',{className:'text-sm font-semibold text-slate-400'},shu))),
+    showWeeklyGoal&&e('div',{className:'bg-white rounded-lg p-4 border border-slate-200 shadow-sm flex-1'},
+      e('div',{className:'text-[10px] font-bold text-slate-900 uppercase tracking-widest mb-3 text-center'},'Weekly Target'),
+      lastW?e('div',null,
+        e('div',{className:'flex items-center justify-between mb-2'},e('div',{className:'flex items-center gap-2'},e('span',{className:'text-sm font-bold text-slate-700'},`W${lastW}`),lastWd&&e('span',{className:'text-[10px] text-slate-400'},fd(lastWd.start))),e('span',{className:'text-lg font-bold text-slate-900 mono'},lastVal!==null?fv(lastVal,du):'—')),
+        lastTarget!==null?e('div',{className:'flex items-center justify-between bg-amber-50 rounded-lg px-3 py-2 border border-amber-200'},e('div',{className:'flex items-center gap-1.5'},e('span',{className:'w-2 h-2 rounded-full bg-amber-400 inline-block'}),e('span',{className:'text-xs font-bold text-amber-800'},`Target: ${fv(lastTarget,du)}`)),lastPct!==null?e('span',{className:`text-xs font-bold px-2.5 py-1 rounded-full ${lastSc.badge}`},`${lastPct>0?'+':''}${lastPct}%`):e('span',{className:'text-[10px] text-slate-300'},'—')):e('div',{className:'text-[10px] text-slate-300 italic mt-1'},'No target'))
+      :e('div',{className:'text-xs text-slate-400 italic text-center py-3'},'Awaiting more data…')),
+    // Gauge section — Q2/Q3/Q4 slider for Renewal TCV
+    hasQ3
+      ?e('div',{className:`bg-white rounded-lg border shadow-sm text-center ${!showWeeklyGoal?'flex-1':''} ${slideClickHandler?'cursor-pointer hover:border-violet-400 hover:shadow-md transition-all group border-slate-200':'border-slate-200'}`,onClick:slideClickHandler||undefined},
+        // Slider header — prev/next step through Q2 -> Q3 -> Q4
+        e('div',{className:'flex items-center justify-between px-4 pt-3 pb-1'},
+          e('button',{onClick:ev=>{ev.stopPropagation();if(slideIdx>0)setQSlide(QSLIDES[slideIdx-1])},className:`w-6 h-6 flex items-center justify-center rounded-full transition-all ${slideIdx===0?'text-slate-200 cursor-default':'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`},e('span',{className:'text-sm'},'\u25c0')),
+          e('div',null,
+            e('div',{className:'text-[10px] font-bold text-slate-900 uppercase tracking-widest'},`${qSlide.toUpperCase()} Quota Target`),
+            e('div',{className:'text-[8px] font-semibold text-slate-400 uppercase tracking-wide mt-0.5'},qSlide===activeQ?'Viewing this quarter':'Other quarter')),
+          e('button',{onClick:ev=>{ev.stopPropagation();if(slideIdx<QSLIDES.length-1)setQSlide(QSLIDES[slideIdx+1])},className:`w-6 h-6 flex items-center justify-center rounded-full transition-all ${slideIdx===QSLIDES.length-1?'text-slate-200 cursor-default':'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`},e('span',{className:'text-sm'},'\u25b6'))),
+        // Gauge content
+        e('div',{className:'px-4 pb-2'},gaugeForQuarter(qSlide)),
+        // Dot indicators
+        e('div',{className:'flex items-center justify-center gap-2 pb-3'},
+          QSLIDES.map(q=>e('button',{key:q,onClick:ev=>{ev.stopPropagation();setQSlide(q)},title:q.toUpperCase(),className:`w-2 h-2 rounded-full transition-all ${qSlide===q?'bg-violet-500 scale-125':'bg-slate-300 hover:bg-slate-400'}`}))),
+        // View deals hint
+        slideClickHandler&&e('div',{className:'text-[10px] font-semibold text-violet-400 pb-3 opacity-60 group-hover:opacity-100 transition-opacity'},`View ${qSlide.toUpperCase()} quota deals \u2192`))
+      // Non-slider fallback for other metrics or no Q3
+      :e((q2Clickable||onSalesQ2Click)?'button':'div',{className:`bg-white rounded-lg p-4 border shadow-sm text-center ${!showWeeklyGoal?'flex-1':''} ${(q2Clickable||onSalesQ2Click)?'border-slate-200 cursor-pointer hover:border-violet-400 hover:shadow-md transition-all group':'border-slate-200'}`,onClick:q2Clickable?onQ2Click:onSalesQ2Click?onSalesQ2Click:undefined},
+        e('div',{className:'text-[10px] font-bold text-slate-900 uppercase tracking-widest mb-2'},`${quarterLabel||'Q3'} Target`),
+        q2T?e('div',null,
+          isAvg&&!isLatest
+            ?(()=>{const st=avgSt(q2A,q2T,inv);return e('div',{className:'space-y-3'},e('div',null,e('div',{className:'text-[10px] text-slate-500 font-semibold mb-1'},'Current Avg'),e('div',{className:'flex items-baseline justify-center gap-1.5'},e('span',{className:'text-2xl font-bold text-emerald-600 mono'},q2A!==null?fv(q2A,du):'—'),shu&&q2A!==null&&e('span',{className:'text-xs font-semibold text-emerald-400'},shu))),e('div',{className:'text-xs text-slate-500'},'Goal: ',e('span',{className:'font-bold text-slate-700'},`${fv(q2T,du)} ${shu}`)),st?e('div',{className:`inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border font-bold text-sm ${st.color}`},e('span',{className:`w-3 h-3 rounded-full ${st.dc} inline-block`}),e('span',null,st.label),e('span',{className:'text-xs font-bold opacity-80 ml-1'},st.pct)):e('div',{className:'text-xs text-slate-300 italic'},'No data yet'))})()
+            :isMRR?gaugeMRR():gaugeQ2()
+        ):e('div',{className:'text-xs text-slate-400 italic py-4'},`No ${quarterLabel||'Q3'} target set`),
+        (q2Clickable||onSalesQ2Click)&&e('div',{className:'text-[10px] font-semibold text-violet-400 mt-2 opacity-60 group-hover:opacity-100 transition-opacity'},q2Clickable?'View Q2 quota deals →':'View sales deals →')),
+    hint&&e('div',{className:'text-center text-[10px] text-violet-400 font-semibold pt-2'},hint));
+});
+
+function WeekInd({currentWeek:cw,totalWeeks:tw,weekDates:wd,displayUpTo,onWeekClick,onReset}){
+  const w=wd.find(d=>d.week===cw);const defaultMax=cw;const isCustom=displayUpTo!==null&&displayUpTo!==defaultMax;const activeMax=displayUpTo||defaultMax;const activeWd=wd.find(d=>d.week===activeMax);
+  return e('div',{className:'flex items-center gap-3 px-4 py-2.5 bg-white rounded-xl border border-slate-200 shadow-sm'},
+    e('div',{className:'flex items-center gap-2'},e('div',{className:'w-2.5 h-2.5 rounded-full bg-violet-500 pulse-dot'}),e('span',{className:'text-sm font-bold text-slate-800'},`Week ${cw}`),e('span',{className:'text-xs text-slate-400'},`of ${tw}`)),
+    e('div',{className:'w-px h-5 bg-slate-200'}),
+    isCustom?e('span',{className:'text-xs font-semibold text-violet-600'},`Showing W1–W${activeMax}`):activeWd&&e('span',{className:'text-xs text-slate-500'},wl(activeWd)),
+    e('div',{className:'w-px h-5 bg-slate-200'}),
+    e('div',{className:'flex gap-0.5'},Array.from({length:tw},(_,i)=>{const wk=i+1,isCompleted=wk<=cw,isInProgress=wk===cw+1,isFuture=wk>cw+1,isActive=wk<=activeMax,isSelected=wk===activeMax&&isCustom;
+      return e('button',{key:wk,onClick:()=>onWeekClick(wk),
+        className:`w-3 h-3 rounded-sm transition-all ${isSelected?'bg-violet-600 ring-2 ring-violet-300 scale-125':isInProgress?'bg-violet-500 ring-2 ring-violet-200':isActive&&isCompleted?'bg-violet-300':isCompleted?'bg-violet-100':isFuture&&isActive?'bg-violet-200 border border-dashed border-violet-400':isFuture?'bg-slate-50 border border-dashed border-slate-300':'bg-slate-100'} cursor-pointer hover:scale-125 hover:bg-violet-400`,
+        title:`W${wk}${isFuture?' (future)':isInProgress?' (in progress)':''} — click to show up to this week`})})),
+    isCustom&&e('button',{onClick:onReset,className:'ml-1 px-2 py-1 text-[10px] font-bold text-violet-600 bg-violet-50 hover:bg-violet-100 rounded border border-violet-200 transition-colors'},'Reset'))
+}
+
+function tcvTotal(deals){return deals.reduce((s,d)=>{const v=parseFloat(String(d.tcv).replace(/[$,]/g,''));return s+(isNaN(v)?0:v)},0)}
+function quotaTcvTotal(deals,field){const f=field||'quotaTcv';return deals.reduce((s,d)=>{const v=parseFloat(String(d[f]||d.tcv).replace(/[$,]/g,''));return s+(isNaN(v)?0:v)},0)}
+// Quota-TCV column per quarter. RenewalDetail only has dedicated columns for Q2 (P) and Q3 (Q);
+// for Q4 quotaTcvTotal falls back to each deal's full renewed TCV.
+function quotaFieldFor(q){return q==='q3'?'quotaTcvQ3':q==='q2'?'quotaTcv':'quotaTcvQ'+String(q).replace(/[^0-9]/g,'')}
+// Two tag-matching rules, mirroring the two rules RenewalDetail!S already uses:
+//  · QRT progress    -> SUMIF(J,"*Q3*",...)          : substring, so split-quarter deals count in both
+//  · Annual cohort   -> filter(J="In Q3 quota",...)   : exact, so split-quarter deals are excluded
+function inQuotaLoose(d,q){return !!(d.quotaStatus&&d.quotaStatus.toLowerCase().includes(q))}
+function inQuotaExact(d,q){return !!(d.quotaStatus&&d.quotaStatus.trim().toLowerCase()==='in '+q+' quota')}
+// Renewal progress computed straight from the deal rows. The equivalent formulas in
+// RenewalDetail!S are hard-capped at row 31 and under-report as rows are appended. These
+// computed figures reproduce the sheet's definitions exactly, minus that row cap; the sheet's
+// own values are retained so any discrepancy can be surfaced for reconciliation.
+function computeRenewalProgress(deals){
+  const out={};
+  ['q2','q3','q4'].forEach(q=>{
+    const field=quotaFieldFor(q);
+    const inQ=(deals||[]).filter(d=>inQuotaLoose(d,q));
+    const cohort=(deals||[]).filter(d=>inQuotaExact(d,q)&&parseVal(d.prevTerm)>=12);
+    out[q]={qrt:quotaTcvTotal(inQ,field),annual:quotaTcvTotal(cohort,field),count:inQ.length,cohortCount:cohort.length};
+  });
+  return out;
+}
+// Show the sheet's figure alongside ours only when they materially disagree, so the
+// discrepancy is visible rather than silent.
+function sheetDelta(computed,sheetVal){
+  if(sheetVal==null||computed==null)return null;
+  if(Math.abs(computed-sheetVal)<1)return null;
+  return sheetVal;
+}
+
+function MetricCard({metric:m,weekDates,currentWeek,timeRange,monthWeeks,idx,renewalDeals,q3RenewalTarget,q2AnnualCohortTarget,q3AnnualCohortTarget,renewalTargets,salesDeals,maxWeek,deptCfg,quarterLabel,quarter,renewalComputed}){
+  const[selWeek,setSelWeek]=useState(null);const[drawerMode,setDrawerMode]=useState(null);const[salesDrawer,setSalesDrawer]=useState(null);const[highlightDeal,setHighlightDeal]=useState(null);
+  const du=gdu(m),wtdStr=wtd(m),origUnit=unitLabel(m.unit),hasDetail=isRenTCV(m),hasSalesDetail=isNewBrandMRR(m);
+  const onBar=useCallback(w=>{if(hasDetail){setSelWeek(w);setDrawerMode('week')}else if(hasSalesDetail){setSelWeek(w);setSalesDrawer('week')}},[hasDetail,hasSalesDetail]);
+  const onQ2Click=useCallback(()=>setDrawerMode('q2quota'),[]);
+  const onQ3Click=useCallback(()=>setDrawerMode('q3quota'),[]);
+  const onQ4Click=useCallback(()=>setDrawerMode('q4quota'),[]);
+  const onSalesQ2Click=useCallback(()=>setSalesDrawer('detail'),[]);
+  const onDrawerClose=useCallback(()=>{setDrawerMode(null);setSelWeek(null);setHighlightDeal(null)},[]);
+  const onSalesDrawerClose=useCallback(()=>{setSalesDrawer(null);setSelWeek(null);setHighlightDeal(null)},[]);
+  // Click-through from weekly card to detail table — open the quarter currently being viewed
+  const onDealClickThrough=useCallback(customerName=>{if(hasDetail){setDrawerMode(quarter==='q2'?'q2quota':'q3quota');setHighlightDeal(customerName);setTimeout(()=>setHighlightDeal(null),3000)}else if(hasSalesDetail){setSalesDrawer('detail');setHighlightDeal(customerName);setTimeout(()=>setHighlightDeal(null),3000)}},[hasDetail,hasSalesDetail,quarter]);
+
+  // Compute sales-derived numbers for InfoPanel DualGauge
+  const salesNumbers=useMemo(()=>{
+    if(!hasSalesDetail||!salesDeals||!salesDeals.length)return null;
+    const qS=weekDates.length>0?new Date(weekDates[0].start):null;
+    if(qS)qS.setHours(0,0,0,0);
+    const qE=qS?new Date(qS.getFullYear(),qS.getMonth()+3,0,23,59,59,999):null;
+    function realized(ds){if(!ds||!qS||!qE)return false;const d=new Date(ds);if(isNaN(d))return false;d.setHours(12,0,0,0);return d>=qS&&d<=qE&&d<=new Date()}
+    const reg=salesDeals.filter(d=>!(d.category||'').toLowerCase().includes('paid pilot'));
+    const pil=salesDeals.filter(d=>(d.category||'').toLowerCase().includes('paid pilot'));
+    const regARR=reg.reduce((s,d)=>s+(realized(salesEffectiveDate(d))?parseVal(d.goalMRR):0),0);
+    const pilMRR=pil.reduce((s,d)=>{return s+(realized(d.pilotStartDate)?parseVal(d.paidPilotMRR):0)+(realized(d.conversionStartDate)?parseVal(d.conversionMRR):0)},0);
+    return{regARR,pilMRR,total:regARR+pilMRR}
+  },[hasSalesDetail,salesDeals,weekDates]);
+
+  // All deals are from the same list — Q2/Q3 distinguished by quotaStatus in column J
+  const allDeals=useMemo(()=>hasDetail?(renewalDeals||[]):[],[renewalDeals,hasDetail]);
+  const weekDeals=useMemo(()=>{if(!hasDetail||drawerMode!=='week'||!selWeek)return[];const wd=weekDates.find(d=>d.week===selWeek);return dealsForWeek(renewalDeals,wd)},[hasDetail,drawerMode,selWeek,renewalDeals,weekDates]);
+  const drawerDeals=drawerMode==='week'?weekDeals:(drawerMode==='q2quota'||drawerMode==='q3quota')?allDeals:[];
+  const drawerTCV=tcvTotal(drawerDeals);
+  const selWd=selWeek?weekDates.find(d=>d.week===selWeek):null;
+  const drawerQuotaKey=drawerMode==='q3quota'?'q3':drawerMode==='q2quota'?'q2':drawerMode==='q4quota'?'q4':(quarter==='q2'?'q2':'q3');
+
+  return e('div',{id:`metric-${m.id}`,className:'bg-white rounded-xl shadow-md p-6 border border-slate-200 animate-slide-in',style:{animationDelay:`${idx*0.04}s`,transition:'box-shadow 0.3s ease'}},
+    e('div',{className:'mb-5 rounded-xl bg-gradient-to-br from-slate-50/80 via-white to-slate-50/50 border border-slate-200 overflow-hidden'},
+      e('div',{className:'flex'},
+        e('div',{className:'w-1.5 shrink-0',style:{background:'linear-gradient(to bottom, #7c3aed, #a78bfa, #c4b5fd)'}}),
+        e('div',{className:'flex-1 p-5 min-w-0'},
+          e('div',{className:'flex items-start justify-between gap-4'},
+            e('h3',{className:'text-xl font-bold text-slate-900',style:{letterSpacing:'-0.01em'}},dn(m)),
+            origUnit&&e('div',{className:'text-[11px] font-semibold text-slate-400 bg-white px-2.5 py-1 rounded-md border border-slate-200 shrink-0 shadow-sm'},origUnit)),
+          m.description&&e('p',{className:'text-[13px] text-slate-500 mt-2.5 leading-relaxed max-w-3xl'},m.description),
+          e('div',{className:'flex items-center gap-2 mt-3 flex-wrap'},
+            e('span',{className:'inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-600 bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-sm uppercase tracking-wide'},(deptCfg&&deptCfg[m.dept])?deptCfg[m.dept].i+' ':'',m.dept),
+            m.team&&m.team!==m.dept&&e('span',{className:'inline-flex items-center gap-1.5 text-[11px] font-medium text-slate-500 bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-sm'},(TEAM_ICONS[m.team]||'')+' ',m.team),
+            e('span',{className:'inline-flex items-center gap-1.5 text-[11px] font-medium text-slate-500 bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-sm'},'👤 ',m.owner),
+            (()=>{const si=sourceInfo(m.source);if(!si)return null;return si.url?e('a',{href:si.url,target:'_blank',rel:'noopener noreferrer',className:'inline-flex items-center gap-1.5 text-[11px] font-medium text-violet-600 bg-violet-50 px-3 py-1.5 rounded-full border border-violet-200 shadow-sm hover:bg-violet-100 hover:border-violet-300 transition-colors'},'🔗 ',si.name,' ↗'):e('span',{className:'inline-flex items-center gap-1.5 text-[11px] font-medium text-slate-500 bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-sm'},'🔗 ',si.name)})()),
+          (m.q2Target||wtdStr)?e('div',{className:'flex items-stretch gap-3 mt-4 flex-wrap'},
+            m.q2Target&&e('div',{className:'flex-1 min-w-[120px] bg-white rounded-lg p-3.5 border border-slate-200 text-center shadow-sm'},
+              e('div',{className:'text-[10px] font-bold text-violet-500 uppercase tracking-widest mb-1.5'},`${quarterLabel||'Q3'} Target${m.aggregation==='average'?' (avg)':''}`),
+              e('div',{className:'text-lg font-bold text-slate-900 mono'},m.q2TargetRaw||fv(m.q2Target,du))),
+            wtdStr&&e('div',{className:'flex-1 min-w-[120px] bg-gradient-to-br from-amber-50 to-yellow-50 rounded-lg p-3.5 border border-amber-200 text-center shadow-sm'},
+              e('div',{className:'flex items-center justify-center gap-1.5 mb-1.5'},
+                e('span',{className:'w-2 h-2 rounded-full bg-amber-400 inline-block'}),
+                e('div',{className:'text-[10px] font-bold text-amber-600 uppercase tracking-widest'},'Weekly Target')),
+              e('div',{className:'text-sm font-bold text-slate-800 mono leading-snug'},wtdStr))
+          ):null))),
+    e('div',{className:'grid grid-cols-1 lg:grid-cols-3 gap-6',style:{minHeight:'440px'}},
+      e('div',{className:'lg:col-span-2 flex flex-col'},e('div',{className:'bg-slate-50 rounded-lg p-5 border border-slate-100 flex-1 flex flex-col overflow-hidden'},e('h4',{className:'text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4 shrink-0'},timeRange==='fourWeek'?'4-Week Trend':`${quarterLabel||'Q3'} Trend`),e('div',{className:'flex-1 min-h-0'},e(BarChart,{metric:m,weekDates,currentWeek,timeRange,monthWeeks,onBarClick:(hasDetail||hasSalesDetail)?onBar:null,selectedWeek:(hasDetail||hasSalesDetail)?selWeek:null,maxWeek,renewalDeals:hasDetail?renewalDeals:null,salesDeals:hasSalesDetail?salesDeals:null})))),
+      e('div',{className:'flex flex-col overflow-hidden'},e('div',{className:'rounded-lg p-4 border flex-1 flex flex-col overflow-hidden bg-slate-50 border-slate-100'},e(InfoPanel,{metric:m,currentWeek,weekDates,onQ2Click:hasDetail?onQ2Click:null,onQ3Click:hasDetail?onQ3Click:null,onQ4Click:hasDetail?onQ4Click:null,q3RenewalTarget:q3RenewalTarget,renewalDeals:renewalDeals,renewalTargets,onSalesQ2Click:hasSalesDetail?onSalesQ2Click:null,salesNumbers,quarterLabel,quarter,renewalComputed})))),
+    hasDetail&&e(SlideDrawer,{open:drawerMode!==null,onClose:onDrawerClose,
+      title:drawerMode==='week'?`W${selWeek} Renewal Deals`:`${drawerQuotaKey.toUpperCase()} Renewal Deals`,
+      subtitle:drawerMode==='week'&&selWd?wl(selWd):`Deals counted toward the ${drawerQuotaKey.toUpperCase()} target`,
+      deals:drawerDeals,
+      view:(drawerMode==='q2quota'||drawerMode==='q3quota'||drawerMode==='q4quota')?'table':'cards',
+      quotaKey:drawerQuotaKey,
+      q2AnnualCohortTarget,q3AnnualCohortTarget,q2RenewalTarget:m.q2Target,q3RenewalTarget,renewalTargets,highlightDeal,onDealClickThrough,renewalComputed}),
+    hasSalesDetail&&e(SalesSlideDrawer,{open:salesDrawer!==null,onClose:onSalesDrawerClose,mode:salesDrawer,selWeek,weekDates,salesDeals:salesDeals||[],q2Target:m.q2Target,du,highlightDeal,onDealClickThrough,quarter}))
+}
+
+function salesDealsForWeek(deals,wd){if(!deals||!wd||!wd.start||!wd.end)return[];const results=[];(deals||[]).forEach(d=>{const pil=(d.category||'').toLowerCase().includes('paid pilot');if(!pil){if(dateInWeek(salesEffectiveDate(d),wd))results.push({...d,weekCtx:'regular'})}else{if(dateInWeek(d.pilotStartDate,wd))results.push({...d,weekCtx:'pilot'});if(dateInWeek(d.conversionStartDate,wd))results.push({...d,weekCtx:'conversion'})}});return results}
+function isPilot(d){return(d.category||'').toLowerCase().includes('paid pilot')}
+
+function SalesDealCard({deal:d,onClick}){
+  const pilot=isPilot(d);
+  const ctx=d.weekCtx;
+  const ctxTag=ctx==='pilot'?{l:'Pilot Phase',c:'text-amber-600 bg-amber-100'}:ctx==='conversion'?{l:'Conversion Phase',c:'text-violet-600 bg-violet-100'}:{l:'Regular',c:'text-emerald-600 bg-emerald-100'};
+  const applicableMRR=ctx==='pilot'?d.paidPilotMRR:ctx==='conversion'?d.conversionMRR:d.goalMRR;
+  const applicableDate=ctx==='pilot'?d.pilotStartDate:ctx==='conversion'?d.conversionStartDate:salesEffectiveDate(d);
+  return e('div',{className:`rounded-lg p-4 border shadow-sm hover:shadow-md transition-shadow ${ctx==='pilot'?'bg-amber-50/50 border-amber-200':ctx==='conversion'?'bg-violet-50/50 border-violet-200':'bg-white border-slate-200'} ${onClick?'cursor-pointer':''}`,'onClick':onClick?()=>onClick(d.customer):undefined},
+    e('div',{className:'flex items-start justify-between mb-2'},
+      e('div',{className:'flex items-center gap-2 flex-wrap'},e('span',{className:'font-bold text-sm text-slate-900'},d.customer),e('span',{className:`text-[9px] font-bold px-2 py-0.5 rounded-full ${ctxTag.c}`},ctxTag.l)),
+      e('span',{className:'text-sm font-bold text-violet-700 mono shrink-0'},applicableMRR||'—')),
+    e('div',{className:'grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs'},
+      e('div',null,e('span',{className:'text-slate-400'},'Owner: '),e('span',{className:'font-semibold text-slate-700'},d.owner||'—')),
+      e('div',null,e('span',{className:'text-slate-400'},'Start: '),e('span',{className:'font-semibold text-slate-700'},applicableDate||'—')),
+      e('div',null,e('span',{className:'text-slate-400'},'Close: '),e('span',{className:'font-semibold text-slate-700'},d.closeDate||'—')),
+      e('div',null,e('span',{className:'text-slate-400'},'Category: '),e('span',{className:'font-semibold text-slate-700'},d.category||'—'))),
+    pilot&&ctx!=='regular'&&e('div',{className:'mt-3 flex gap-2'},
+      e('div',{className:`flex-1 rounded-md px-2 py-1.5 border text-center ${ctx==='pilot'?'bg-amber-100 border-amber-300':'bg-amber-50 border-amber-200'}`},e('div',{className:'text-[9px] font-bold text-amber-500 uppercase'},'Pilot'),e('div',{className:'text-xs font-bold text-amber-700 mono'},d.paidPilotMRR||'—'),e('div',{className:'text-[9px] text-amber-400'},d.pilotStartDate||'')),
+      e('div',{className:`flex-1 rounded-md px-2 py-1.5 border text-center ${ctx==='conversion'?'bg-violet-100 border-violet-300':'bg-violet-50 border-violet-200'}`},e('div',{className:'text-[9px] font-bold text-violet-500 uppercase'},'Conversion'),e('div',{className:'text-xs font-bold text-violet-700 mono'},d.conversionMRR||'—'),e('div',{className:'text-[9px] text-violet-400'},d.conversionStartDate||''))))
+}
+
+function SalesSlideDrawer({open,onClose,mode,selWeek,weekDates,salesDeals,q2Target,du,highlightDeal,onDealClickThrough,quarter}){
+  const[view,setView]=useState('total');
+  const defaultQ=quarter==='q2'?'q2':'q3';
+  const[activeQ,setActiveQ]=useState(defaultQ);
+  const hlRef=useRef(null);
+  useEffect(()=>{if(open){setView('total');setActiveQ(defaultQ)}},[open,defaultQ]);
+  useEffect(()=>{if(highlightDeal&&hlRef.current){const row=hlRef.current.querySelector(`[data-deal="${highlightDeal}"]`);if(row)row.scrollIntoView({behavior:'smooth',block:'center'})}},[highlightDeal]);
+  if(!open)return null;
+  const isDetail=mode==='detail';
+  const allDealsRaw=salesDeals||[];
+
+  // Quarter window for the tab the user has selected (not just the loaded dashboard quarter)
+  const qWin=quarterWindow(activeQ,quarterYear(weekDates));
+  function dateInQ(ds){return inWindow(ds,qWin)}
+  function dateRealized(ds){return realizedInWindow(ds,qWin)}
+
+  // Compute applicable MRR for each pilot deal (only realized dates count toward goal)
+  function pilotApplicable(d){
+    const pInQ=dateInQ(d.pilotStartDate);
+    const cInQ=dateInQ(d.conversionStartDate);
+    const pRealized=dateRealized(d.pilotStartDate);
+    const cRealized=dateRealized(d.conversionStartDate);
+    return{pInQ,cInQ,pRealized,cRealized,mrr:(pRealized?parseVal(d.paidPilotMRR):0)+(cRealized?parseVal(d.conversionMRR):0)}
+  }
+  // A deal belongs to the selected quarter if its governing date lands in that quarter:
+  // regular deals by contract effective date, pilots by pilot-start or conversion-start.
+  function dealInQuarter(d){
+    if(!isPilot(d))return dateInQ(salesEffectiveDate(d));
+    const pa=pilotApplicable(d);
+    return pa.pInQ||pa.cInQ;
+  }
+  const allDeals=isDetail?allDealsRaw.filter(dealInQuarter):allDealsRaw;
+  const regularDeals=allDeals.filter(d=>!isPilot(d));
+  const pilotDeals=allDeals.filter(d=>isPilot(d));
+
+  const regularGoalMRR=regularDeals.reduce((s,d)=>s+(dateRealized(salesEffectiveDate(d))?parseVal(d.goalMRR):0),0);
+  const regularRealizedCount=regularDeals.filter(d=>dateRealized(salesEffectiveDate(d))).length;
+  const pilotRealizedCount=pilotDeals.filter(d=>pilotApplicable(d).mrr>0).length;
+  const pilotApplicableMRR=pilotDeals.reduce((s,d)=>s+pilotApplicable(d).mrr,0);
+  const totalToGoal=regularGoalMRR+pilotApplicableMRR;
+
+  const selWd=selWeek?weekDates.find(d=>d.week===selWeek):null;
+  const weekDeals=isDetail?[]:salesDealsForWeek(allDealsRaw,selWd);
+  function dealStartDate(d){const p=isPilot(d);if(!p)return salesEffectiveDate(d);const pa=pilotApplicable(d);if(pa.pRealized||pa.pInQ)return d.pilotStartDate||'';if(pa.cRealized||pa.cInQ)return d.conversionStartDate||'';return d.closeDate||''}
+  const rawDeals=isDetail?(view==='regular'?regularDeals:view==='pilot'?pilotDeals:allDeals):weekDeals;
+  const shownDeals=isDetail?[...rawDeals].sort((a,b)=>{const da=new Date(dealStartDate(a)),db=new Date(dealStartDate(b));return(isNaN(da)?0:da)-(isNaN(db)?0:db)}):rawDeals;
+  const isPilotView=view==='pilot';
+  const qLabel=activeQ.toUpperCase();
+
+  const stdHeaders=['Customer','Category','MRR to Goal','Counted On','Close Date','Effective Date','Owner'];
+  const pilotHeaders=['Customer','Owner','Close Date','Pilot MRR','Pilot Start','Conv MRR','Conv Start','Timeline'];
+  const headers=isPilotView?pilotHeaders:stdHeaders;
+
+  function timeline(d){
+    const pTerm=parseVal(d.pilotDetail)||0;
+    const rTerm=parseVal(d.regularMRR)||0;
+    const total=pTerm+rTerm;
+    const pS=d.pilotStartDate?new Date(d.pilotStartDate):null;
+    const cS=d.conversionStartDate?new Date(d.conversionStartDate):null;
+    const now=new Date();
+    const pilotActive=pS&&(!cS||now<cS);
+    const convActive=cS&&now>=cS;
+    const pW=total>0?Math.round((pTerm/total)*100):50;
+    return e('div',{className:'flex items-center gap-1 min-w-[160px]'},
+      e('div',{className:'flex-1 flex h-4 rounded-full overflow-hidden border border-slate-200',style:{minWidth:'100px'}},
+        e('div',{className:`flex items-center justify-center text-[8px] font-bold ${pilotActive?'bg-amber-400 text-amber-900':'bg-amber-100 text-amber-500'}`,style:{width:`${pW}%`}},pTerm?`${pTerm}mo`:''),
+        e('div',{className:`flex items-center justify-center text-[8px] font-bold ${convActive?'bg-emerald-400 text-emerald-900':'bg-emerald-100 text-emerald-500'}`,style:{width:`${100-pW}%`}},rTerm?`${rTerm}mo`:'')),
+      e('div',{className:'text-[9px] font-bold whitespace-nowrap'},pilotActive?e('span',{className:'text-amber-600'},'\u25b6 Pilot'):convActive?e('span',{className:'text-emerald-600'},'\u25b6 Post-Pilot'):e('span',{className:'text-slate-400'},'\u2014')))
+  }
+
+  return e('div',{className:'fixed inset-0 z-[100] flex justify-end'},
+    e('div',{onClick:onClose,className:'absolute inset-0 bg-black/20 backdrop-blur-[2px] anim-fade'}),
+    e('div',{className:`relative w-full h-full bg-white shadow-2xl border-l border-slate-200 flex flex-col anim-drawer ${isDetail?'max-w-5xl':'max-w-md'}`},
+      e('div',{className:'shrink-0 p-5 border-b border-slate-200 bg-gradient-to-r from-slate-50 to-white'},
+        e('div',{className:'flex items-center justify-between mb-4'},
+          e('div',{className:'flex items-center gap-3'},
+            e('h3',{className:'text-xl font-bold text-slate-900'},isDetail?`${qLabel} New Brand MRR Details`:`W${selWeek} Sales Deals`),
+            isDetail&&e('div',{className:'flex items-center bg-slate-100 rounded-lg p-0.5'},
+              ['q2','q3'].map(q=>e('button',{key:q,onClick:()=>{setActiveQ(q);setView('total')},
+                className:`px-3 py-1.5 rounded-md text-xs font-bold transition-all ${activeQ===q?'bg-white text-slate-900 shadow-sm':'text-slate-400 hover:text-slate-600'}`},q.toUpperCase())))),
+          e('button',{onClick:onClose,className:'w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-200 text-slate-400 hover:text-slate-700 transition-colors text-lg font-bold'},'\u2715')),
+        isDetail&&e('div',{className:'flex gap-3 flex-wrap'},
+          e('div',{className:'flex-1 min-w-[120px] bg-gradient-to-br from-violet-50 to-purple-50 rounded-lg p-3 border border-violet-200 shadow-sm text-center'},
+            e('div',{className:'text-[10px] font-bold text-violet-500 uppercase tracking-widest'},`${qLabel} ARR to Goal`),
+            e('div',{className:'flex items-baseline justify-center gap-1.5 mt-1'},e('span',{className:'text-xl font-bold text-violet-700 mono'},fv(totalToGoal,du)),(q2Target&&activeQ===defaultQ)&&e('span',{className:'text-xs text-violet-400'},`/ ${fv(q2Target,du)}`))),
+          e('div',{className:'flex-1 min-w-[110px] bg-gradient-to-br from-amber-50 to-yellow-50 rounded-lg p-3 border border-amber-200 shadow-sm text-center'},
+            e('div',{className:'text-[10px] font-bold text-amber-500 uppercase tracking-widest'},'Pilot / Conv MRR'),
+            e('div',{className:'text-xl font-bold text-amber-700 mono mt-1'},fv(pilotApplicableMRR,du)),
+            e('div',{className:'text-xs font-semibold text-amber-400'},`${pilotRealizedCount} of ${pilotDeals.length} deals`)),
+          e('div',{className:'flex-1 min-w-[110px] bg-gradient-to-br from-emerald-50 to-green-50 rounded-lg p-3 border border-emerald-200 shadow-sm text-center'},
+            e('div',{className:'text-[10px] font-bold text-emerald-500 uppercase tracking-widest'},'Regular ARR'),
+            e('div',{className:'text-xl font-bold text-emerald-700 mono mt-1'},fv(regularGoalMRR,du)),
+            e('div',{className:'text-xs font-semibold text-emerald-400'},`${regularRealizedCount} of ${regularDeals.length} deals`))),
+        isDetail&&e('div',{className:'flex items-center gap-1 mt-4 bg-slate-100 rounded-lg p-1'},
+          [{k:'total',l:'Total',c:allDeals.length,ac:'bg-violet-100 text-violet-700'},
+           {k:'pilot',l:'Pilot / Conv',c:pilotDeals.length,ac:'bg-amber-100 text-amber-700'},
+           {k:'regular',l:'Regular',c:regularDeals.length,ac:'bg-emerald-100 text-emerald-700'}].map(t=>
+            e('button',{key:t.k,onClick:()=>setView(t.k),
+              className:`flex-1 px-3 py-2 rounded-md text-xs font-bold transition-all ${view===t.k?'bg-white text-slate-900 shadow-sm':'text-slate-500 hover:text-slate-700'}`},
+              t.l,' ',e('span',{className:`ml-1 text-[10px] font-bold px-1.5 py-0.5 rounded-full ${view===t.k?t.ac:'bg-slate-200/60 text-slate-400'}`},t.c))))),
+      isDetail
+        ?e('div',{ref:hlRef,className:'flex-1 overflow-auto'},
+          shownDeals.length>0
+            ?e('table',{className:'w-full text-sm'},
+              e('thead',null,e('tr',{className:`sticky top-0 z-10 ${isPilotView?'bg-amber-50':'bg-slate-50'}`},
+                headers.map(h=>e('th',{key:h,className:`text-left text-[10px] font-bold uppercase tracking-wider px-4 py-3 border-b whitespace-nowrap ${isPilotView?'text-amber-600 border-amber-200':'text-slate-500 border-slate-200'}`},h)))),
+              e('tbody',null,shownDeals.map((d,i)=>{
+                const pilot=isPilot(d);
+                const isHL=highlightDeal&&d.customer===highlightDeal;
+                if(isPilotView){
+                  const pa=pilotApplicable(d);
+                  return e('tr',{key:i,'data-deal':d.customer,className:`border-b border-amber-100 bg-amber-50/30 hover:bg-amber-50 transition-colors ${isHL?'row-highlight':''}`},
+                    e('td',{className:'px-4 py-3 font-semibold text-slate-900 whitespace-nowrap'},d.customer),
+                    e('td',{className:'px-4 py-3 text-slate-600'},d.owner||'\u2014'),
+                    e('td',{className:'px-4 py-3 text-slate-600 whitespace-nowrap'},d.closeDate||'\u2014'),
+                    e('td',{className:`px-4 py-3 mono whitespace-nowrap ${pa.pRealized?'font-bold text-amber-700 bg-amber-100/50 rounded':pa.pInQ?'font-semibold text-amber-400 bg-amber-50 rounded border border-dashed border-amber-300':'text-slate-300'}`},d.paidPilotMRR||'\u2014'),
+                    e('td',{className:`px-4 py-3 whitespace-nowrap ${pa.pRealized?'text-amber-600 font-semibold':pa.pInQ?'text-amber-400':'text-slate-400'}`},d.pilotStartDate||'\u2014'),
+                    e('td',{className:`px-4 py-3 mono whitespace-nowrap ${pa.cRealized?'font-bold text-emerald-700 bg-emerald-100/50 rounded':pa.cInQ?'font-semibold text-emerald-400 bg-emerald-50 rounded border border-dashed border-emerald-300':'text-slate-300'}`},d.conversionMRR||'\u2014'),
+                    e('td',{className:`px-4 py-3 whitespace-nowrap ${pa.cRealized?'text-emerald-600 font-semibold':pa.cInQ?'text-emerald-400':'text-slate-400'}`},d.conversionStartDate||'\u2014'),
+                    e('td',{className:'px-4 py-3'},timeline(d)))
+                }
+                return e('tr',{key:i,'data-deal':d.customer,className:`border-b border-slate-100 transition-colors ${pilot?'bg-amber-50/40 hover:bg-amber-50':'bg-white hover:bg-slate-50'} ${isHL?'row-highlight':''}`},
+                  e('td',{className:'px-4 py-3 whitespace-nowrap'},e('div',{className:'flex items-center gap-1.5'},e('span',{className:'font-semibold text-slate-900'},d.customer),pilot?e('span',{className:'text-[8px] font-bold text-amber-600 bg-amber-100 px-1.5 py-0.5 rounded-full leading-none'},'Pilot'):e('span',{className:'text-[8px] font-bold text-emerald-600 bg-emerald-100 px-1.5 py-0.5 rounded-full leading-none'},'Regular'))),
+                  e('td',{className:'px-4 py-3 text-slate-600'},d.category||'\u2014'),
+                  (()=>{if(!pilot)return e('td',{className:'px-4 py-3 font-bold text-emerald-700 mono whitespace-nowrap'},d.goalMRR||'\u2014');const pa=pilotApplicable(d);const parts=[];if(pa.pRealized)parts.push({mrr:d.paidPilotMRR,l:'Pilot',c:'text-amber-600'});if(pa.cRealized)parts.push({mrr:d.conversionMRR,l:'Conv',c:'text-violet-600'});if(!parts.length&&pa.pInQ)parts.push({mrr:d.paidPilotMRR,l:'Pilot (pending)',c:'text-amber-400'});if(!parts.length&&pa.cInQ)parts.push({mrr:d.conversionMRR,l:'Conv (pending)',c:'text-violet-400'});return e('td',{className:'px-4 py-3 whitespace-nowrap'},parts.length?e('div',{className:'flex flex-col gap-0.5'},parts.map((p,j)=>e('div',{key:j,className:'flex items-center gap-1.5'},e('span',{className:`font-bold mono ${p.c}`},p.mrr||'\u2014'),e('span',{className:'text-[8px] font-bold text-slate-400'},p.l)))):e('span',{className:'text-slate-300'},'\u2014'))})(),
+                  (()=>{if(!pilot)return e('td',{className:'px-4 py-3 text-slate-600 whitespace-nowrap'},salesEffectiveDate(d)||'\u2014');const pa=pilotApplicable(d);if(pa.pRealized||pa.pInQ)return e('td',{className:'px-4 py-3 text-slate-600 whitespace-nowrap'},d.pilotStartDate||'\u2014');if(pa.cRealized||pa.cInQ)return e('td',{className:'px-4 py-3 text-slate-600 whitespace-nowrap'},d.conversionStartDate||'\u2014');return e('td',{className:'px-4 py-3 text-slate-400'},'\u2014')})(),
+                  e('td',{className:'px-4 py-3 text-slate-600 whitespace-nowrap'},d.closeDate||'\u2014'),
+                  e('td',{className:'px-4 py-3 text-slate-400 whitespace-nowrap'},d.contractEffectiveDate||'\u2014'),
+                  e('td',{className:'px-4 py-3 text-slate-600'},d.owner||'\u2014'))})))
+            :e('div',{className:'flex flex-col items-center justify-center h-full text-slate-400 p-10'},e('div',{className:'text-4xl mb-3'},'\ud83d\udced'),e('div',{className:'text-sm font-medium'},'No deals found')))
+        :e('div',{className:'flex-1 overflow-y-auto p-5 space-y-3'},
+          weekDeals.length>0
+            ?weekDeals.map((d,i)=>e(SalesDealCard,{key:i,deal:d,onClick:onDealClickThrough}))
+            :e('div',{className:'flex flex-col items-center justify-center h-full text-slate-400'},e('div',{className:'text-4xl mb-3'},'\ud83d\udced'),e('div',{className:'text-sm font-medium'},'No deals this week')))))
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// STICKY METRIC NAV — appears on scroll, allows jumping between metrics
+// and toggling the period view (4-Week / Q2 Total)
+// ═══════════════════════════════════════════════════════════════════════════
+function StickyNav({metrics,activeId,timeRange,onTimeRangeChange,onRefresh,loading,quarterLabel,quarter,onQuarterChange}){
+  const navRef=useRef(null);
+  const[show,setShow]=useState(false);
+  useEffect(()=>{
+    const onScroll=()=>setShow(window.scrollY>320);
+    window.addEventListener('scroll',onScroll,{passive:true});
+    return()=>window.removeEventListener('scroll',onScroll);
+  },[]);
+  // Auto-scroll active pill into view
+  useEffect(()=>{
+    if(navRef.current&&activeId){
+      const pill=navRef.current.querySelector(`[data-nav="${activeId}"]`);
+      if(pill)pill.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+    }
+  },[activeId]);
+  if(!show)return null;
+  return e('div',{className:'fixed top-0 left-0 right-0 z-50 transition-all',style:{backdropFilter:'blur(12px)',background:'rgba(248,247,252,0.85)',borderBottom:'1px solid rgba(148,163,184,0.2)',boxShadow:'0 1px 8px rgba(0,0,0,0.06)'}},
+    e('div',{className:'max-w-7xl mx-auto px-4 py-2 flex items-center gap-2'},
+      // Brand mark — doubles as a scroll-to-top affordance once the header is out of view
+      e('button',{onClick:()=>window.scrollTo({top:0,behavior:'smooth'}),title:'Back to top',
+        className:'shrink-0 flex items-center rounded-md hover:opacity-70 transition-opacity'},
+        e('img',{src:STACKER_MARK,alt:'Stacker',className:'h-6 w-6'})),
+      e('div',{className:'w-px h-5 bg-slate-200 shrink-0'}),
+      // Quarter badge/switcher — always visible, color-coded so the active quarter is unmistakable
+      e('div',{className:'flex items-center bg-white rounded-lg border-2 border-violet-300 shadow-sm p-0.5 shrink-0'},
+        ['q2','q3'].map(q=>e('button',{key:q,onClick:()=>onQuarterChange&&onQuarterChange(q),
+          className:`px-2.5 py-1 rounded-md text-[11px] font-extrabold tracking-wide transition-all ${quarter===q?'bg-violet-600 text-white shadow-sm':'text-slate-400 hover:text-slate-600'}`},q.toUpperCase()))),
+      e('div',{className:'w-px h-5 bg-slate-200 shrink-0'}),
+      // Period toggle — left-anchored, never scrolls away
+      e('div',{className:'flex items-center gap-1 shrink-0 mr-1'},
+        [{k:'fourWeek',l:'4W'},{k:'q2',l:'Total'}].map(r=>
+          e('button',{key:r.k,onClick:()=>onTimeRangeChange(r.k),
+            className:`px-2.5 py-1 rounded-md text-[11px] font-bold transition-all ${
+              timeRange===r.k
+                ?'bg-violet-600 text-white shadow-sm'
+                :'bg-white/80 text-slate-500 hover:bg-violet-100 hover:text-violet-700 border border-slate-200'
+            }`},r.l))),
+      // Thin divider
+      e('div',{className:'w-px h-5 bg-slate-200 shrink-0'}),
+      // Scrollable metric pills
+      e('div',{ref:navRef,className:'flex gap-1.5 overflow-x-auto',style:{scrollbarWidth:'none',msOverflowStyle:'none'}},
+        metrics.map(m=>
+          e('button',{key:m.id,'data-nav':m.id,
+            onClick:()=>{const el=document.getElementById(`metric-${m.id}`);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})},
+            className:`shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all whitespace-nowrap ${
+              activeId===m.id?'bg-violet-600 text-white shadow-md':'bg-white/80 text-slate-600 hover:bg-violet-100 hover:text-violet-700 border border-slate-200'
+            }`},dn(m)))),
+      // Refresh button
+      e('div',{className:'w-px h-5 bg-slate-200 shrink-0'}),
+      e('button',{onClick:onRefresh,disabled:loading,className:'shrink-0 flex items-center gap-1 px-2.5 py-1 bg-slate-900 text-white rounded-md hover:bg-slate-800 disabled:opacity-50 text-[11px] font-bold transition-all'},e('span',{className:loading?'animate-spin':''},'↻'),'Refresh')));
+}
+
+function Dashboard(){
+  const[quarter,setQuarter]=useState('q3'),[vm,setVm]=useState('overview'),[teamFilter,setTeamFilter]=useState('all'),[tr,setTr]=useState('fourWeek'),[ld,setLd]=useState(false),[err,setErr]=useState(null),[data,setData]=useState(null),[ar,setAr]=useState(true),[lu,setLu]=useState(null),[displayUpTo,setDisplayUpTo]=useState(null),[activeMetricId,setActiveMetricId]=useState(null);
+  const tmr=useRef(null);
+  const deptCfg=DEPT_CFG_BY_QUARTER[quarter]||DEPT_CFG_BY_QUARTER.q3;
+  const quarterLabel=(data&&data.quarterLabel)||(quarter==='q2'?'Q2':'Q3');
+  // Track which metric card is in view
+  useEffect(()=>{
+    if(!data)return;
+    const observer=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{if(entry.isIntersecting)setActiveMetricId(entry.target.id.replace('metric-',''))});
+    },{rootMargin:'-80px 0px -60% 0px',threshold:0.1});
+    const cards=document.querySelectorAll('[id^="metric-"]');
+    cards.forEach(c=>observer.observe(c));
+    return()=>observer.disconnect();
+  },[data,vm,teamFilter]);
+  useEffect(()=>{document.title=`Stacker KPI Dashboard — ${quarterLabel}`},[quarterLabel]);
+  useEffect(()=>{if(!ar){if(tmr.current)clearInterval(tmr.current);return}tmr.current=setInterval(load,900000);return()=>{if(tmr.current)clearInterval(tmr.current)}},[ar,quarter]);
+  useEffect(()=>{load()},[quarter]);
+  // Surface the API's own error text (it returns {error} with a 500) instead of a bare status.
+  const load=async()=>{setLd(true);setErr(null);try{
+    const r=await fetch(`/api/sheets?quarter=${quarter}&t=${Date.now()}`);
+    if(!r.ok){let detail='';try{const j=await r.json();if(j&&j.error)detail=j.error}catch(_){}
+      throw new Error(`API returned ${r.status}${detail?': '+detail:` ${r.statusText||''}`}`)}
+    const j=await r.json();
+    if(!j||!Array.isArray(j.metrics))throw new Error('API responded but returned no metrics \u2014 check the sheet tab name and range');
+    setData(j);setLu(new Date())
+  }catch(e){setErr(e.message||String(e))}finally{setLd(false)}};
+  const fmtU=()=>{if(!lu)return'Never';const m=Math.floor((new Date()-lu)/60000);if(m<1)return'Just now';if(m<60)return`${m}m ago`;return`${Math.floor(m/60)}h ago`};
+  const switchQuarter=q=>{if(q===quarter)return;setQuarter(q);setVm('overview');setTeamFilter('all');setDisplayUpTo(null);setActiveMetricId(null);setData(null)};
+  const deptFiltered=useMemo(()=>data?vm==='overview'?data.metrics:data.metrics.filter(m=>m.dept===vm):[],[data,vm]);
+  // Teams present within the currently selected dept tab (Q3 only — Q2 metrics have no `team` field)
+  const teamsInDept=useMemo(()=>{const s=new Set();deptFiltered.forEach(m=>{if(m.team)s.add(m.team)});return Array.from(s)},[deptFiltered]);
+  const showTeamPills=quarter==='q3'&&vm!=='overview'&&teamsInDept.length>1;
+  const filtered=useMemo(()=>{if(!showTeamPills||teamFilter==='all')return deptFiltered;return deptFiltered.filter(m=>m.team===teamFilter)},[deptFiltered,showTeamPills,teamFilter]);
+  // No data yet: show the spinner while a request is in flight, but if it failed show WHY.
+  // Previously this always returned the spinner, so an API error looked like an endless load.
+  if(!data)return e('div',{className:'min-h-screen p-6 flex items-center justify-center'},
+    err
+      ?e('div',{className:'max-w-lg w-full bg-white rounded-xl border border-red-200 shadow-md p-6 text-center'},
+        e('div',{className:'text-3xl mb-3'},'\u26a0\ufe0f'),
+        e('h2',{className:'text-lg font-bold text-slate-900 mb-1'},'Couldn\u2019t load the dashboard'),
+        e('p',{className:'text-sm text-slate-500 mb-4'},`Requested quarter: ${quarter.toUpperCase()}`),
+        e('div',{className:'text-xs text-red-800 bg-red-50 border border-red-200 rounded-lg px-3 py-2 mono text-left break-words mb-4'},err),
+        e('div',{className:'flex items-center justify-center gap-2'},
+          e('button',{onClick:load,disabled:ld,className:'px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 disabled:opacity-50 font-medium text-sm'},ld?'Retrying\u2026':'Retry'),
+          e('a',{href:`/api/sheets?quarter=${quarter}`,target:'_blank',rel:'noopener noreferrer',className:'px-4 py-2 bg-white text-slate-700 border border-slate-200 rounded-lg hover:bg-slate-50 font-medium text-sm'},'Open API response')),
+        e('p',{className:'text-[11px] text-slate-400 mt-4'},'Check SHEET_ID / API_KEY in Vercel, and that the sheet tab names still match.'))
+      :e('div',{className:'text-center'},
+        e('div',{className:'animate-spin rounded-full h-12 w-12 border-b-2 border-violet-600 mx-auto mb-4'}),
+        e('p',{className:'text-slate-600 font-medium'},'Loading dashboard\u2026')));
+  const{currentWeek:cw,totalWeeks:tw,monthWeeks:mw,weekDates:wd,renewalDeals,renewalTargets:rt,salesDeals}=data;
+  const q3RenewalTarget=rt?rt.q3QrtTarget:(data.q3RenewalTarget||null);
+  const renewalComputed=computeRenewalProgress(renewalDeals||[]);
+  const q2AnnualCohortTarget=rt?rt.q2AnnualTarget:(data.q2AnnualCohortTarget||null);
+  const q3AnnualCohortTarget=rt?rt.q3AnnualTarget:(data.q3AnnualCohortTarget||null);
+
+  const cards=()=>e('div',{className:'mb-6'},e('h3',{className:'text-sm font-semibold text-slate-500 mb-3 uppercase tracking-wide'},'Metrics Overview'),e('div',{className:'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2'},filtered.map(m=>{const du=gdu(m),shu=su(du),isLV=isLatestValueMetric(m),lastW=cw>=1?cw:null,rv=isLV?latestWeekValue(m,cw):lastW?m.values[lastW]:null;
+  function tgtStatus(val,tgt,inv){if(val===null||tgt===null)return'grey';const hit=inv?val<=tgt:val>=tgt;if(hit)return'green';const ratio=inv?(tgt/val):(val/tgt);return ratio>=0.9?'yellow':'red'}
+  // Last 4 weeks target dots
+  const dots=[];for(let i=0;i<4;i++){const w=cw-3+i;if(w<1){dots.push('grey');continue}dots.push(tgtStatus(m.values[w],gwt(m,w),m.isInverse))}
+  // Last week hit/miss
+  const lwTarget=lastW?gwt(m,lastW):null;const lwVal=lastW?m.values[lastW]:null;const lwStatus=tgtStatus(lwVal,lwTarget,m.isInverse);
+  const teamName=m.team||m.dept;
+  const tc=teamColorFor(teamName);
+  return e('button',{key:m.id,onClick:()=>{const el=document.getElementById(`metric-${m.id}`);if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.style.boxShadow='0 0 0 3px rgba(124,58,237,0.4)';setTimeout(()=>{el.style.boxShadow=''},2000)}},title:teamName||'',className:`rounded-lg p-2 border hover:shadow-md transition-all text-left cursor-pointer group ${tc.tint} ${tc.border}`},
+    e('div',{className:'flex items-start justify-between gap-1 mb-1'},
+      e('h4',{className:`text-[9px] font-bold uppercase tracking-wide leading-tight truncate min-w-0 ${tc.name}`},dn(m)),
+      e('div',{className:'flex gap-0.5 shrink-0 mt-0.5'},dots.map((c,i)=>e('div',{key:i,className:`w-1.5 h-1.5 rounded-full ${c==='green'?'bg-green-400':c==='yellow'?'bg-amber-400':c==='red'?'bg-red-400':'bg-slate-200'}`})))),
+    e('div',{className:'flex items-baseline gap-1 mb-0.5'},e('span',{className:'text-base font-bold text-slate-900 mono'},rv!==null?fv(rv,du):'—'),shu&&rv!==null&&e('span',{className:'text-[9px] text-slate-400'},shu)),
+    lwTarget!==null?e('div',{className:'flex items-center gap-1'},
+        e('span',{className:`w-1.5 h-1.5 rounded-full inline-block shrink-0 ${lwStatus==='green'?'bg-green-500':lwStatus==='yellow'?'bg-amber-500':lwStatus==='red'?'bg-red-500':'bg-slate-300'}`}),
+        e('span',{className:'text-[9px] text-slate-500 truncate'},fv(lwTarget,du)),
+        e('span',{className:`text-[9px] font-bold ml-auto shrink-0 ${lwStatus==='green'?'text-green-600':lwStatus==='yellow'?'text-amber-600':lwStatus==='red'?'text-red-600':'text-slate-400'}`},lwStatus==='green'?'✓':lwStatus==='yellow'?'~':lwStatus==='red'?'✗':'…'))
+      :e('div',{className:'text-[9px] text-slate-300'},'No target'))})));
+
+  return e('div',{className:'min-h-screen p-6'},
+    e(StickyNav,{metrics:filtered,activeId:activeMetricId,timeRange:tr,onTimeRangeChange:setTr,onRefresh:load,loading:ld,quarterLabel,quarter,onQuarterChange:switchQuarter}),
+    e('div',{className:'max-w-7xl mx-auto'},
+    e('div',{className:'mb-8'},
+      e('div',{className:'flex items-start justify-between mb-5 flex-wrap gap-4'},
+        e('div',{className:'flex items-center gap-3 flex-wrap'},
+          e('div',{className:'flex items-center gap-3'},
+            e('img',{src:STACKER_LOGO,alt:'Stacker',className:'h-7 w-auto shrink-0',style:{maxWidth:'190px'}}),
+            e('span',{className:'h-7 w-px bg-slate-300 shrink-0'}),
+            e('h1',{className:'text-3xl font-bold text-slate-900',style:{letterSpacing:'-0.02em'}},'KPI Dashboard')),
+          e('div',{className:'flex items-center gap-2 bg-white rounded-xl border-2 border-violet-300 shadow-md px-1 py-1',style:{boxShadow:'0 0 0 3px rgba(124,58,237,0.08)'}},
+            e('span',{className:'text-[10px] font-bold text-violet-400 uppercase tracking-widest pl-2 pr-1'},'Quarter'),
+            ['q2','q3'].map(q=>e('button',{key:q,onClick:()=>switchQuarter(q),className:`px-4 py-1.5 rounded-lg text-base font-extrabold tracking-wide transition-all ${quarter===q?'bg-gradient-to-r from-violet-600 to-purple-600 text-white shadow-md scale-105':'text-slate-400 hover:text-slate-600 hover:bg-slate-50'}`},q.toUpperCase()))))
+        ,e('div',{className:'flex gap-2 items-center flex-wrap'},e(WeekInd,{currentWeek:cw,totalWeeks:tw,weekDates:wd,displayUpTo,onWeekClick:w=>setDisplayUpTo(w===cw?null:w),onReset:()=>setDisplayUpTo(null)}),e('div',{className:'flex items-center gap-2 px-3 py-2 bg-white rounded-lg border border-slate-200 shadow-sm'},e('button',{onClick:()=>setAr(!ar),className:`text-xs font-medium ${ar?'text-green-600':'text-slate-400'}`},ar?'● Auto':'○ Manual'),e('span',{className:'text-xs text-slate-400'},fmtU())),e('button',{onClick:load,disabled:ld,className:'flex items-center gap-1.5 px-3 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 disabled:opacity-50 shadow-sm font-medium text-sm'},e('span',{className:ld?'animate-spin':''},'↻'),'Refresh'))),
+      err&&e('div',{className:'mb-4 p-3 bg-red-50 border-2 border-red-200 rounded-lg flex items-start gap-2'},e('span',{className:'text-red-600 text-lg'},'⚠'),e('div',{className:'text-sm text-red-800 font-medium'},err)),
+      e('div',{className:'flex gap-2 mb-3 flex-wrap'},Object.entries(deptCfg).map(([k,c])=>e('button',{key:k,onClick:()=>{setVm(k);setTeamFilter('all')},className:`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${vm===k?'bg-slate-900 text-white shadow-md scale-105':'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'}`},`${c.i} ${c.l}`))),
+      showTeamPills&&e('div',{className:'flex gap-2 mb-4 flex-wrap items-center'},
+        e('span',{className:'text-xs font-semibold text-slate-400 uppercase tracking-wide mr-1'},'Team:'),
+        e('button',{onClick:()=>setTeamFilter('all'),className:`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${teamFilter==='all'?'bg-violet-600 text-white shadow-sm':'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}`},'All'),
+        teamsInDept.map(t=>e('button',{key:t,onClick:()=>setTeamFilter(t),className:`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${teamFilter===t?'bg-violet-600 text-white shadow-sm':'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}`},`${TEAM_ICONS[t]||''} ${t}`))),
+      e('div',{className:'flex gap-3 items-center'},e('span',{className:'text-sm font-semibold text-slate-600'},'Period:'),[{k:'fourWeek',l:'4-Week'},{k:'q2',l:`${quarterLabel} Total`}].map(r=>e('button',{key:r.k,onClick:()=>setTr(r.k),className:`px-4 py-2 text-sm rounded-lg font-semibold transition-all ${tr===r.k?'bg-violet-600 text-white shadow-md':'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'}`},r.l)))),
+    cards(),
+    e('div',{className:'grid grid-cols-1 gap-6'},filtered.map((m,i)=>e(MetricCard,{key:m.id,metric:m,weekDates:wd,currentWeek:cw,timeRange:tr,monthWeeks:mw,idx:i,renewalDeals:renewalDeals||[],q3RenewalTarget,q2AnnualCohortTarget,q3AnnualCohortTarget,renewalTargets:rt,salesDeals:salesDeals||[],maxWeek:displayUpTo,deptCfg,quarterLabel,quarter,renewalComputed})))));
+}
+
+ReactDOM.render(React.createElement(Dashboard),document.getElementById('root'));
+</script></body></html>
